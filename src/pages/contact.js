@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import Nav from '@/components/nav';
 
 export default function Contact() {
   const [form, setForm] = useState({ name: '', email: '', message: '' });
@@ -19,15 +20,14 @@ export default function Contact() {
     });
     const data = await res.json();
     setResponse(data.message);
+    setForm({ name: '', email: '', message: '' })
   };
 
   return (
     <div className="bg-gray-100 h-screen flex items-center justify-center">
       <div className="bg-white p-8 rounded shadow-lg">
         <h1 className="text-2xl font-bold mb-4">Contact Us</h1>
-        <nav>
-          <a href="/">Home</a> | <a href="/about">About</a> | <a href="/contact">Contact</a>
-        </nav>
+        <Nav />
         <form onSubmit={handleSubmit}>
           <div className="mb-4">
             <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="name">
