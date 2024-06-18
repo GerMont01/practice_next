@@ -1,27 +1,20 @@
-import data from "./MOCK_DATA.json"
+import devices from "./devices.json"
 
 export default async function handler(req, res) {
-    
-
-    const fetchAndMergeData = async () => {
-        let phones = [...data];
-        const response = await fetch('https://jsonplaceholder.typicode.com/photos')
-        const json = await response.json()
-        const elements = json.slice(0,100)
-        phones = phones.map(phone => {
-            const url = elements.find(ele => ele.id === phone.id).url
-            return ({...phone, url})
-        })
-        return phones
-    }
 
     if (req.method === 'GET') {
         try {
-            let phones = await fetchAndMergeData()
+            let phones = devices
 
-            const { brand } = req.query
+            const { brand, os, year, sort } = req.query
 
-            if (brand) phones = phones.filter(phone => phone.brand === brand); 
+            if (brand) phones = phones.filter(phone => phone.brand_name === brand); 
+            if (os) phones = phones.filter(phone => phone.os === os); 
+            if (year) phones = phones.filter(phone => phone.released_at.toString() === year);
+            if (sort) {
+                sort === "asc" ? phones.sort((a,b)=>a.name.localeCompare(b.name)) : phones.sort((a,b)=>b.name.localeCompare(a.name))
+            }
+
             res.status(200).json(phones);
         } catch (error) {
             console.log(error)

@@ -24,7 +24,7 @@
     width: 75%;
   }
   .product {
-    @apply flex flex-col items-center p-2 m-3 transition duration-200 sm:w-40 md:w-60 lg:w-80 xl:w-96 hover:scale-105 hover:cursor-pointer;
+    @apply flex flex-col items-center p-2 m-3 transition duration-200 sm:w-20 md:w-28 lg:w-32 xl:w-36 hover:scale-105 hover:cursor-pointer;
     border-radius: 5px;
     box-shadow: 0 0 10px 5px rgba(0, 0, 0, 0.1);
   }
