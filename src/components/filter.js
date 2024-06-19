@@ -7,9 +7,6 @@ export default function Filter(props) {
     const [ os, setOs ] = useState("")
     const [ year, setYear ] = useState("")
     const [ sort, setSort ] = useState("")
-    const [ allBrands, setAllBrands ] = useState([])
-    const [ allOs, setAllOS ] = useState([])
-    const [ allYears, setAllYears ] = useState([])
     const sortOptions = ["asc","desc"]    
 
     const router = useRouter()
@@ -74,18 +71,6 @@ export default function Filter(props) {
         }
     }
 
-    useEffect(()=>{
-        const brandValues = props.allProducts.map(obj => obj.brand_name);
-        setAllBrands([...new Set(brandValues)]);
-
-        const osValues = props.allProducts.map(obj => obj.os);
-        setAllOS([...new Set(osValues)]);
-
-        const yearValues = props.allProducts.map(obj => obj.released_at);
-        setAllYears([...new Set(yearValues)]);
-
-    },[props.allProducts])
-
     useEffect(()=> {
         const { sort, brand, os, year } = router.query
 
@@ -97,8 +82,8 @@ export default function Filter(props) {
     },[router.query])
 
     return (
+        props.filters &&
         <div className="filter">
-
             <Autocomplete 
                 label="Sort by name" 
                 className="w-full"
@@ -118,7 +103,7 @@ export default function Filter(props) {
                 selectedKey={brand}
                 onSelectionChange={handleBrand}
             >
-                {allBrands?.map((ele) => (
+                {props.filters.all_brands.map((ele) => (
                 <AutocompleteItem key={ele} value={ele} >
                     {ele}
                 </AutocompleteItem>
@@ -131,7 +116,7 @@ export default function Filter(props) {
                 selectedKey={os}
                 onSelectionChange={handleOs}
             >
-                {allOs?.map((ele) => (
+                {props.filters.all_os?.map((ele) => (
                 <AutocompleteItem key={ele} value={ele} >
                     {ele}
                 </AutocompleteItem>
@@ -144,7 +129,7 @@ export default function Filter(props) {
                 selectedKey={year}
                 onSelectionChange={handelYear}
             >
-                {allYears?.map((ele) => (
+                {props.filters.all_years.map((ele) => (
                 <AutocompleteItem key={ele.toString()} value={ele.toString()} >
                     {ele.toString()}
                 </AutocompleteItem>

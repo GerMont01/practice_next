@@ -6,7 +6,7 @@ export default async function handler(req, res) {
         try {
             let phones = devices
 
-            const { brand, os, year, sort } = req.query
+            const { brand, os, year, sort, page } = req.query
 
             if (brand) phones = phones.filter(phone => phone.brand_name === brand); 
             if (os) phones = phones.filter(phone => phone.os === os); 
@@ -14,8 +14,23 @@ export default async function handler(req, res) {
             if (sort) {
                 sort === "asc" ? phones.sort((a,b)=>a.name.localeCompare(b.name)) : phones.sort((a,b)=>b.name.localeCompare(a.name))
             }
+            const total_products = phones.length
 
-            res.status(200).json(phones);
+            const all_brands = [...new Set(phones.map(phone => phone.brand_name))]
+            const all_os = [...new Set(phones.map(phone => phone.os))]
+            const all_years = [...new Set(phones.map(phone => phone.released_at))]
+
+            phones = phones.slice(((page||1)-1)*20,(page||1)*20)
+
+            const response = {
+                phones,
+                total_products,
+                all_brands,
+                all_os,
+                all_years
+            }
+
+            res.status(200).json(response);
         } catch (error) {
             console.log(error)
         }
