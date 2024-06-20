@@ -7,7 +7,7 @@ export default function Filter(props) {
     const [ os, setOs ] = useState("")
     const [ year, setYear ] = useState("")
     const [ sort, setSort ] = useState("")
-    const sortOptions = ["asc","desc"]    
+    const sortOptions = ["model_asc","model_desc","release_year_asc","release_year_desc"]    
 
     const router = useRouter()
 
@@ -30,7 +30,7 @@ export default function Filter(props) {
         setBrand(e)
         if (e) {
             router.replace({
-                query: { ...router.query, brand: e },
+                query: { ...router.query, brand: e, page: 1 },
             })
         } else {
             const newQuery = router.query
@@ -45,7 +45,7 @@ export default function Filter(props) {
         setOs(e)
         if (e) {
             router.replace({
-                query: { ...router.query, os: e },
+                query: { ...router.query, os: e, page: 1 },
             })
         } else {
             const newQuery = router.query
@@ -60,7 +60,7 @@ export default function Filter(props) {
         setYear(e)
         if (e) {
             router.replace({
-                query: { ...router.query, year: e },
+                query: { ...router.query, year: e, page: 1 },
             })
         } else {
             const newQuery = router.query
@@ -85,7 +85,7 @@ export default function Filter(props) {
         props.filters &&
         <div className="filter">
             <Autocomplete 
-                label="Sort by name" 
+                label="Sort by" 
                 className="w-full"
                 selectedKey={sort}
                 onSelectionChange={handleSort}
@@ -103,7 +103,7 @@ export default function Filter(props) {
                 selectedKey={brand}
                 onSelectionChange={handleBrand}
             >
-                {props.filters.all_brands.map((ele) => (
+                {props.filters.all_brands?.map((ele) => (
                 <AutocompleteItem key={ele} value={ele} >
                     {ele}
                 </AutocompleteItem>
@@ -129,7 +129,7 @@ export default function Filter(props) {
                 selectedKey={year}
                 onSelectionChange={handelYear}
             >
-                {props.filters.all_years.map((ele) => (
+                {props.filters.all_years?.map((ele) => (
                 <AutocompleteItem key={ele.toString()} value={ele.toString()} >
                     {ele.toString()}
                 </AutocompleteItem>

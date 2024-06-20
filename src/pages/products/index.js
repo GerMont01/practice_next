@@ -16,35 +16,35 @@ export default function Products() {
 
     const fetchData = async () => {
         const params = router.query
-        // const savedData = JSON.parse(localStorage.getItem("phones"))
-        // const savedPhoneQty = JSON.parse(localStorage.getItem("phone_qty"))
         if (Object.keys(params).length === 0){
-            // if (!savedData) {
-                const response = await fetch(`/api/products?page=1`);
-                const { phones, total_products, all_brands, all_os, all_years } = await response.json();
-                // localStorage.setItem("data",JSON.stringify(response))
-                // localStorage.setItem("phone_qty",JSON.stringify(total_products))
-                setProducts(phones)
-                setFilterData({all_brands,all_os,all_years})
-                setProductQty(total_products)
-            // } else {
-            //     setProducts(savedData)
-            //     setProductQty(savedPhoneQty)
-            // }
+            const response = await fetch(`/api/products?page=1`);
+            const { phones, total_products } = await response.json();
+            setProducts(phones)
+            setProductQty(total_products)
         } else {
             const queryString = new URLSearchParams(params).toString();
             const response = await fetch(`/api/products?${queryString}`);
-            const { phones, total_products, all_brands, all_os, all_years } = await response.json();
+            const { phones, total_products } = await response.json();
             setProducts(phones)
-            setFilterData({all_brands,all_os,all_years})
             setProductQty(total_products)
         } 
-        
+        console.log("fetched data")
+    }
+
+    const fetchFilters = async () => {
+        const response = await fetch(`/api/filter_data`);
+        const data = await response.json();
+        setFilterData(data)
     }
 
     useEffect(() => {
-        fetchData();
-      }, [router.query]);
+        fetchData()
+    }, [router.query])
+
+    useEffect(()=>{
+        fetchFilters()
+    },[])
+
     
     return (
         <div className="container max-w-full bg-gray-100">
@@ -52,17 +52,26 @@ export default function Products() {
             <div className="flex w-full place-content-between">
                 <Filter filters={filterData}/>
                 <div className="products">
-                {products && 
+                {products?.length > 0 ? ( 
                 <>
                     {products.map((product,i)=>(
                         <div className="product" key={i}>
-                            <img src={product.picture} className="w-11/12" alt={product.name} onClick={()=>router.push(`/products/${product.id}`)}/>
-                            <p className="h-8 m-2 text-sm text-center">{product.name}</p>
+                            <img 
+                                src={product.picture} 
+                                className="w-11/12" 
+                                alt={product.name} 
+                                onClick={()=>router.push(`/products/${product.id}`)}
+                            />
+                            <p className="h-12 m-2 text-sm text-center">{product.name} ({product.released_at})</p>
                         </div>
                     ))}
                     <Pagination totalPages={Math.ceil(productQty/20)} />
                 </>
-                }
+                ) : (
+                    <div>
+                        <p>No products match your search</p>
+                    </div>
+                )}
                 </div>
             </div>
         </div>
