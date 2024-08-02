@@ -18,32 +18,34 @@ export default function Products() {
         const params = router.query
         if (Object.keys(params).length === 0){
             const response = await fetch(`/api/products?page=1`);
-            const { phones, total_products } = await response.json();
+            const { phones, total_products, filters } = await response.json();
             setProducts(phones)
             setProductQty(total_products)
+            setFilterData(filters)
         } else {
             const queryString = new URLSearchParams(params).toString();
             const response = await fetch(`/api/products?${queryString}`);
-            const { phones, total_products } = await response.json();
+            const { phones, total_products, filters } = await response.json();
             setProducts(phones)
             setProductQty(total_products)
+            setFilterData(filters)
         } 
         console.log("fetched data")
     }
 
-    const fetchFilters = async () => {
-        const response = await fetch(`/api/filter_data`);
-        const data = await response.json();
-        setFilterData(data)
-    }
+    // const fetchFilters = async () => {
+    //     const response = await fetch(`/api/filter_data`);
+    //     const data = await response.json();
+    //     setFilterData(data)
+    // }
 
     useEffect(() => {
         fetchData()
     }, [router.query])
 
-    useEffect(()=>{
-        fetchFilters()
-    },[])
+    // useEffect(()=>{
+    //     fetchFilters()
+    // },[])
 
     
     return (

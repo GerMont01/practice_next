@@ -47,20 +47,20 @@ export default function Pagination(props) {
         <div className="m-5 flex items-center justify-center w-full h-10\">
             {currentElements > 1 && 
                 <div 
-                    className={`w-10 h-10 p-2 text-center bg-white hover:cursor-pointer hover:shadow`} 
+                    className={`w-10 h-10 p-2 text-center bg-white hover:cursor-pointer hover:shadow transition duration-200 hover:scale-105`} 
                     onClick={()=>handleCurrentElements("prev")}
                 > {"<"} </div>
             }
             {pages.length>0 && pages.map((page)=>
                 <div 
-                    className={`w-10 h-10 p-2 text-center hover:cursor-pointer hover:shadow ${currentPage.toString() === page.toString() ? 'bg-red-500' : 'bg-white'}`} 
+                    className={`w-10 h-10 p-2 text-center transition duration-200 hover:scale-105 hover:cursor-pointer hover:shadow ${currentPage.toString() === page.toString() ? 'bg-red-500' : 'bg-white'}`} 
                     key={page} 
                     onClick={()=>handelPage(page)}
                 > {page} </div>
             )}
             {currentElements < maxElements && 
                 <div 
-                    className={`w-10 h-10 p-2 text-center bg-white hover:cursor-pointer hover:shadow`} 
+                    className={`w-10 h-10 p-2 text-center transition duration-200 hover:scale-105 bg-white hover:cursor-pointer hover:shadow`} 
                     onClick={()=>handleCurrentElements("next")}
                 > {">"} </div>
             }

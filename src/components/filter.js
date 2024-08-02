@@ -7,9 +7,57 @@ export default function Filter(props) {
     const [ os, setOs ] = useState("")
     const [ year, setYear ] = useState("")
     const [ sort, setSort ] = useState("")
+    const [ deviceName, setDeviceName ] = useState("")
+    const [ selectedDevice, setSelectedDevice ] = useState("")
     const sortOptions = ["model_asc","model_desc","release_year_asc","release_year_desc"]    
 
     const router = useRouter()
+
+    const myFilter = (optionsValue, inputValue) => {
+        if (inputValue === null) return
+        if (inputValue.length === 0) {
+          return
+        }
+        
+        optionsValue = optionsValue.normalize("NFC").toLocaleLowerCase();
+        inputValue = inputValue.normalize("NFC").toLocaleLowerCase();
+
+        if (inputValue.length === 1) {
+            return optionsValue[0] === inputValue;
+        } else {
+            return optionsValue.includes(inputValue);
+        }    
+    }
+
+    const handleDeviceName = () => {
+        if (selectedDevice) {
+            router.replace({
+                query: { ...router.query, search: selectedDevice },
+            })
+            setDeviceName(selectedDevice)
+            setSelectedDevice(null)
+        } else {
+            if (deviceName) {
+                router.replace({
+                    query: { ...router.query, search: deviceName },
+                })
+            } 
+        }
+    }
+    const handleSelection = (e) => {
+        setSelectedDevice(e)
+    }
+
+    const handleInputValue = (e) => {
+        setDeviceName(e)
+        if (!e) {
+            const newQuery = router.query
+            delete newQuery.search;
+            router.replace({
+                query: { ...newQuery },
+            })
+        }
+    }
 
     const handleSort = (e) => {
         setSort(e)
@@ -71,6 +119,18 @@ export default function Filter(props) {
         }
     }
 
+    const clearFilters = () =>{
+        setBrand("")
+        setDeviceName("")
+        setOs("")
+        setSelectedDevice(null)
+        setSort("")
+        setYear("")
+        router.replace({
+            query: { },
+        })
+    }
+
     useEffect(()=> {
         const { sort, brand, os, year } = router.query
 
@@ -84,6 +144,22 @@ export default function Filter(props) {
     return (
         props.filters &&
         <div className="filter">
+            <Autocomplete
+                allowsCustomValue
+                className="w-full"
+                defaultFilter={myFilter}
+                defaultItems={props.filters.phones || []}
+                label="Search by name"
+                menuTrigger="input"
+                inputValue={deviceName}
+                selectedKey={selectedDevice}
+                onSelectionChange={handleSelection}
+                onInputChange={handleInputValue}
+                onClose={handleDeviceName}
+                >
+                {(item) => <AutocompleteItem key={item.name}>{item.name}</AutocompleteItem>}
+            </Autocomplete>
+
             <Autocomplete 
                 label="Sort by" 
                 className="w-full"
@@ -135,6 +211,7 @@ export default function Filter(props) {
                 </AutocompleteItem>
                 ))}
             </Autocomplete>
+            <button className="font-inherit text-[0.940rem] flex items-center hover:bg-on-hover-gray text-gray-500 relative px-3 py-2 transition duration-150 ease-in-out shadow-sm cursor-pointer h-14 min-h-10 rounded-xl" onClick={clearFilters} type="button">Clear all</button>
         </div>
     )
 }

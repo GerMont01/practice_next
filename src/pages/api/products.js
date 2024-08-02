@@ -6,8 +6,9 @@ export default async function handler(req, res) {
         try {
             let phones = [...devices]
 
-            const { brand, os, year, sort, page } = req.query
+            const { search, brand, os, year, sort, page } = req.query
 
+            if (search) phones = phones.filter(phone => phone.name.toLowerCase().includes(search.toLowerCase())); 
             if (brand) phones = phones.filter(phone => phone.brand_name === brand); 
             if (os) phones = phones.filter(phone => phone.os === os); 
             if (year) phones = phones.filter(phone => phone.released_at.toString() === year);
@@ -33,11 +34,23 @@ export default async function handler(req, res) {
 
             const total_products = phones.length
 
+            const all_brands = [...new Set(phones.map(phone => phone.brand_name))]
+            const all_os = [...new Set(phones.map(phone => phone.os))]
+            const all_years = [...new Set(phones.map(phone => phone.released_at))]
+            
+            const filters = {
+                phones,
+                all_brands,
+                all_os,
+                all_years
+            }
+
             phones = phones.slice(((page||1)-1)*20,(page||1)*20)
 
             const response = {
                 phones,
-                total_products
+                total_products,
+                filters
             }
 
             res.status(200).json(response);
