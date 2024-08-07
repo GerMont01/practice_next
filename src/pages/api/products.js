@@ -8,38 +8,50 @@ export default async function handler(req, res) {
 
             const { search, brand, os, year, sort, page } = req.query
 
-            if (search) phones = phones.filter(phone => phone.name.toLowerCase().includes(search.toLowerCase())); 
-            if (brand) phones = phones.filter(phone => phone.brand_name === brand); 
-            if (os) phones = phones.filter(phone => phone.os === os); 
-            if (year) phones = phones.filter(phone => phone.released_at.toString() === year);
-            if (sort){
-                switch (sort) {
-                    case "model_asc":
-                        phones.sort((a,b)=>a.name.localeCompare(b.name))
-                        break;
-                    case "model_desc":
-                        phones.sort((a,b)=>b.name.localeCompare(a.name))
-                        break;
-                    case "release_year_asc":
-                        phones.sort((a,b)=>a.released_at - b.released_at)
-                        break;
-                    case "release_year_desc":
-                        phones.sort((a,b)=>b.released_at - a.released_at)
-                        break;
-                    default:
-                        break;
+            if (search) {
+                phones = phones.filter(phone => phone.name.toLowerCase().includes(search.toLowerCase())); 
+            } else {
+                if (brand) phones = phones.filter(phone => phone.brand_name === brand); 
+                if (os) phones = phones.filter(phone => phone.os === os); 
+                if (year) phones = phones.filter(phone => phone.released_at.toString() === year);
+                if (sort){
+                    switch (sort) {
+                        case "model_asc":
+                            phones.sort((a,b)=>a.name.localeCompare(b.name))
+                            break;
+                        case "model_desc":
+                            phones.sort((a,b)=>b.name.localeCompare(a.name))
+                            break;
+                        case "release_year_asc":
+                            phones.sort((a,b)=>a.released_at - b.released_at)
+                            break;
+                        case "release_year_desc":
+                            phones.sort((a,b)=>b.released_at - a.released_at)
+                            break;
+                        default:
+                            break;
+                    }
+                    
                 }
-                
             }
 
             const total_products = phones.length
 
-            const all_brands = [...new Set(phones.map(phone => phone.brand_name))]
-            const all_os = [...new Set(phones.map(phone => phone.os))]
-            const all_years = [...new Set(phones.map(phone => phone.released_at))]
+            const all_brands_set = new Set();
+            const all_os_set = new Set();
+            const all_years_set = new Set();
+
+            for (const phone of phones) {
+                all_brands_set.add(phone.brand_name);
+                all_os_set.add(phone.os);
+                all_years_set.add(phone.released_at);
+            }
+
+            const all_brands = [...all_brands_set];
+            const all_os = [...all_os_set];
+            const all_years = [...all_years_set];
             
             const filters = {
-                phones,
                 all_brands,
                 all_os,
                 all_years

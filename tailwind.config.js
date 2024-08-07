@@ -16,7 +16,7 @@ module.exports = {
     },
     extend: {
       colors: {
-        'on-hover-gray': 'hsl(240, 5.88%, 90%,0.8)',
+        'on-hover-gray': 'hsl(240, 5.88%, 90%,0.9)',
       },
     }
   },

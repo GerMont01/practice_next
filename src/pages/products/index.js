@@ -6,6 +6,7 @@ import Pagination from "@/components/pagination";
 
 export default function Products() {
     const [products, setProducts] = useState([])
+    const [allDevices,setAllDevices] = useState(undefined)
     const [ filterData, setFilterData ] = useState({
         all_brands: [],
         all_os: [],
@@ -33,26 +34,26 @@ export default function Products() {
         console.log("fetched data")
     }
 
-    // const fetchFilters = async () => {
-    //     const response = await fetch(`/api/filter_data`);
-    //     const data = await response.json();
-    //     setFilterData(data)
-    // }
+    const fetchAllDevices = async () => {
+        const response = await fetch(`/api/get_all_devices`);
+        const data = await response.json();
+        setAllDevices(data)
+    }
 
     useEffect(() => {
         fetchData()
     }, [router.query])
 
-    // useEffect(()=>{
-    //     fetchFilters()
-    // },[])
+    useEffect(()=>{
+        if (!allDevices) fetchAllDevices()
+    },[])
 
     
     return (
         <div className="container max-w-full bg-gray-100">
             <Nav />
             <div className="flex w-full place-content-between">
-                <Filter filters={filterData}/>
+                <Filter allDevices={allDevices} filters={filterData}/>
                 <div className="products">
                 {products?.length > 0 ? ( 
                 <>

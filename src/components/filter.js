@@ -32,17 +32,21 @@ export default function Filter(props) {
     const handleDeviceName = () => {
         if (selectedDevice) {
             router.replace({
-                query: { ...router.query, search: selectedDevice },
+                query: { search: selectedDevice, page: 1 },
             })
             setDeviceName(selectedDevice)
             setSelectedDevice(null)
         } else {
             if (deviceName) {
                 router.replace({
-                    query: { ...router.query, search: deviceName },
+                    query: { search: deviceName, page: 1 },
                 })
             } 
         }
+        setBrand("")
+        setOs("")
+        setSort("")
+        setYear("")
     }
     const handleSelection = (e) => {
         setSelectedDevice(e)
@@ -54,7 +58,7 @@ export default function Filter(props) {
             const newQuery = router.query
             delete newQuery.search;
             router.replace({
-                query: { ...newQuery },
+                query: { ...newQuery, page: 1 },
             })
         }
     }
@@ -69,7 +73,7 @@ export default function Filter(props) {
             const newQuery = router.query
             delete newQuery.sort;
             router.replace({
-                query: { ...newQuery },
+                query: { ...newQuery, page: 1 },
             })
         }
     }
@@ -84,7 +88,7 @@ export default function Filter(props) {
             const newQuery = router.query
             delete newQuery.brand;
             router.replace({
-                query: { ...newQuery },
+                query: { ...newQuery, page: 1 },
             })
         }
     }
@@ -99,7 +103,7 @@ export default function Filter(props) {
             const newQuery = router.query
             delete newQuery.os;
             router.replace({
-                query: { ...newQuery },
+                query: { ...newQuery, page: 1 },
             })
         }
     }
@@ -114,7 +118,7 @@ export default function Filter(props) {
             const newQuery = router.query
             delete newQuery.year;
             router.replace({
-                query: { ...newQuery },
+                query: { ...newQuery, page: 1 },
             })
         }
     }
@@ -127,13 +131,14 @@ export default function Filter(props) {
         setSort("")
         setYear("")
         router.replace({
-            query: { },
+            query: { page: 1 },
         })
     }
 
     useEffect(()=> {
-        const { sort, brand, os, year } = router.query
+        const { search, sort, brand, os, year } = router.query
 
+        if (search) setDeviceName(search)
         if (sort) setSort(sort)
         if (brand) setBrand(brand)
         if (os) setOs(os)
@@ -142,13 +147,13 @@ export default function Filter(props) {
     },[router.query])
 
     return (
-        props.filters &&
+        props.filters && props.allDevices &&
         <div className="filter">
             <Autocomplete
                 allowsCustomValue
                 className="w-full"
                 defaultFilter={myFilter}
-                defaultItems={props.filters.phones || []}
+                defaultItems={props.allDevices || []}
                 label="Search by name"
                 menuTrigger="input"
                 inputValue={deviceName}
@@ -159,6 +164,8 @@ export default function Filter(props) {
                 >
                 {(item) => <AutocompleteItem key={item.name}>{item.name}</AutocompleteItem>}
             </Autocomplete>
+
+            <hr className="h-px py-px my-6 bg-gray-200 border-0"></hr>
 
             <Autocomplete 
                 label="Sort by" 
@@ -211,6 +218,7 @@ export default function Filter(props) {
                 </AutocompleteItem>
                 ))}
             </Autocomplete>
+            <hr className="h-px py-px my-6 bg-gray-200 border-0"></hr>
             <button className="font-inherit text-[0.940rem] flex items-center hover:bg-on-hover-gray text-gray-500 relative px-3 py-2 transition duration-150 ease-in-out shadow-sm cursor-pointer h-14 min-h-10 rounded-xl" onClick={clearFilters} type="button">Clear all</button>
         </div>
     )
