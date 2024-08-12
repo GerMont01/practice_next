@@ -1,11 +1,20 @@
 import Nav from "@/components/nav";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { addToCart } from "../../store/reducer";
 
 export default function Product() {
     const pathname = usePathname()
+    const dispatch = useDispatch()
+    const cartItems = useSelector((state) => state.cart.items)
 
     const [ device, setDevice ] = useState(undefined)
+
+    const handleAddToCart = () => {
+        // Dispatch the addToCart action with the selected product
+        dispatch(addToCart(device));
+    };
     
     const fetchData = async (id) => {
         const response = await fetch(`/api/product_description?id=${id}`);
@@ -46,6 +55,9 @@ export default function Product() {
                             <li key={key}><strong>{key.replace(/_/g, ' ')}:</strong> {value}</li>
                             ))}
                         </ul>
+                        <button onClick={handleAddToCart}>Add to Cart</button>
+                        {/* Display the current state of the shopping cart */}
+                        <p>Cart Items: {cartItems.length}</p>
                     </div>
                 </div>
             ) : (
