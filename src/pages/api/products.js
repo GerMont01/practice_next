@@ -6,7 +6,7 @@ export default async function handler(req, res) {
         try {
             let phones = [...devices]
 
-            const { search, brand, os, year, sort, page } = req.query
+            const { price, search, brand, os, year, sort, page } = req.query
 
             if (search) {
                 phones = phones.filter(phone => phone.name.toLowerCase().includes(search.toLowerCase())); 
@@ -14,8 +14,33 @@ export default async function handler(req, res) {
                 if (brand) phones = phones.filter(phone => phone.brand_name === brand); 
                 if (os) phones = phones.filter(phone => phone.os === os); 
                 if (year) phones = phones.filter(phone => phone.released_at.toString() === year);
+                if (price){
+                    switch (price) {
+                        case "$0-199":
+                            phones = phones.filter(phone => phone.price < 200);
+                            break;
+                        case "$200-399":
+                            phones = phones.filter(phone => phone.price >= 200 && phone.price < 400);
+                            break;
+                        case "$400-599":
+                            phones = phones.filter(phone => phone.price >= 400 && phone.price < 600);
+                            break;
+                        case ">$600":
+                            phones = phones.filter(phone => phone.price >= 600);
+                            break;  
+                        default:
+                            break;
+                    }
+                    
+                }
                 if (sort){
                     switch (sort) {
+                        case "price_low_to_high":
+                            phones.sort((a,b)=>a.price - b.price)
+                            break;
+                        case "price_high_to_low":
+                        phones.sort((a,b)=>b.price - a.price)
+                            break;
                         case "model_asc":
                             phones.sort((a,b)=>a.name.localeCompare(b.name))
                             break;

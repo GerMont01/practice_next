@@ -1,19 +1,27 @@
 import Nav from "@/components/nav";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { addToCart } from "../../store/reducer";
 
 export default function Product() {
     const pathname = usePathname()
     const dispatch = useDispatch()
-    const cartItems = useSelector((state) => state.cart.items)
 
     const [ device, setDevice ] = useState(undefined)
 
-    const handleAddToCart = () => {
+    const handleAddToCart = async () => {
         // Dispatch the addToCart action with the selected product
         dispatch(addToCart(device));
+        const addItem = await fetch('/api/cart', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(device),
+        });
+        const response = await addItem.json();
+        alert(response.message)
     };
     
     const fetchData = async (id) => {
@@ -28,12 +36,12 @@ export default function Product() {
 
     return (
         <div className="container h-screen max-w-full bg-gray-100 product_description">
-            <Nav />
             {device ? (
                 <div className="flex p-10 h-4/5 justify-evenly">     
                     <div className="h-full">
                         <h1 className="mb-4 text-2xl font-bold">{device.name}</h1>
                         <img src={device.picture} alt={device.name} className="mb-4" />
+                        <button className="px-4 py-2 font-semibold text-gray-800 bg-white border border-gray-400 rounded shadow hover:bg-gray-200" onClick={handleAddToCart}>Add to Cart</button>
                         <p><strong>Brand:</strong> {device.brand_name}</p>
                         <p><strong>Released At:</strong> {device.released_at}</p>
                         <p><strong>Body:</strong> {device.body}</p>
@@ -55,9 +63,6 @@ export default function Product() {
                             <li key={key}><strong>{key.replace(/_/g, ' ')}:</strong> {value}</li>
                             ))}
                         </ul>
-                        <button onClick={handleAddToCart}>Add to Cart</button>
-                        {/* Display the current state of the shopping cart */}
-                        <p>Cart Items: {cartItems.length}</p>
                     </div>
                 </div>
             ) : (

@@ -3,13 +3,15 @@ import { useRouter } from "next/router"
 import {Autocomplete, AutocompleteItem} from "@nextui-org/react";
 
 export default function Filter(props) {
+    const [ price,setPrice ] = useState("")
     const [ brand, setBrand ] = useState("")
     const [ os, setOs ] = useState("")
     const [ year, setYear ] = useState("")
     const [ sort, setSort ] = useState("")
     const [ deviceName, setDeviceName ] = useState("")
     const [ selectedDevice, setSelectedDevice ] = useState("")
-    const sortOptions = ["model_asc","model_desc","release_year_asc","release_year_desc"]    
+    const sortOptions = ["price_low_to_high","price_high_to_low","model_asc","model_desc","release_year_asc","release_year_desc"]    
+    const priceOptions = ["$0-199","$200-399","$400-599",">$600"]
 
     const router = useRouter()
 
@@ -78,6 +80,21 @@ export default function Filter(props) {
         }
     }
 
+    const handlePrice = (e) => {
+        setPrice(e)
+        if (e) {
+            router.replace({
+                query: { ...router.query, price: e },
+            })
+        } else {
+            const newQuery = router.query
+            delete newQuery.price;
+            router.replace({
+                query: { ...newQuery, page: 1 },
+            })
+        }
+    }
+
     const handleBrand = (e) => {
         setBrand(e)
         if (e) {
@@ -124,6 +141,7 @@ export default function Filter(props) {
     }
 
     const clearFilters = () =>{
+        setPrice("")
         setBrand("")
         setDeviceName("")
         setOs("")
@@ -218,6 +236,20 @@ export default function Filter(props) {
                 </AutocompleteItem>
                 ))}
             </Autocomplete>
+
+            <Autocomplete 
+                label="Price" 
+                className="w-full"
+                selectedKey={price}
+                onSelectionChange={handlePrice}
+            >
+                {priceOptions?.map((ele) => (
+                <AutocompleteItem key={ele} value={ele} >
+                    {ele}
+                </AutocompleteItem>
+                ))}
+            </Autocomplete>
+
             <hr className="h-px py-px my-6 bg-gray-200 border-0"></hr>
             <button className="font-inherit text-[0.940rem] flex items-center hover:bg-on-hover-gray text-gray-500 relative px-3 py-2 transition duration-150 ease-in-out shadow-sm cursor-pointer h-14 min-h-10 rounded-xl" onClick={clearFilters} type="button">Clear all</button>
         </div>

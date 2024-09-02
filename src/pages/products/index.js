@@ -51,7 +51,7 @@ export default function Products() {
     
     return (
         <div className="container max-w-full bg-gray-100">
-            <Nav />
+            {/* <Nav /> */}
             <div className="flex w-full place-content-between">
                 <Filter allDevices={allDevices} filters={filterData}/>
                 <div className="products">
@@ -65,7 +65,8 @@ export default function Products() {
                                 alt={product.name} 
                                 onClick={()=>router.push(`/products/${product.id}`)}
                             />
-                            <p className="h-12 m-2 text-sm text-center">{product.name} ({product.released_at})</p>
+                            <p className="h-16 m-2 text-sm text-center">{product.name} ({product.released_at})</p>
+                            <p className="h-5 m-2 text-sm text-center">$ {product.price}</p>
                         </div>
                     ))}
                     <Pagination totalPages={Math.ceil(productQty/20)} />
