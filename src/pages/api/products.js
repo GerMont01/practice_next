@@ -16,16 +16,16 @@ export default async function handler(req, res) {
                 if (year) phones = phones.filter(phone => phone.released_at.toString() === year);
                 if (price){
                     switch (price) {
-                        case "$0-199":
+                        case "0-199":
                             phones = phones.filter(phone => phone.price < 200);
                             break;
-                        case "$200-399":
+                        case "200-399":
                             phones = phones.filter(phone => phone.price >= 200 && phone.price < 400);
                             break;
-                        case "$400-599":
+                        case "400-599":
                             phones = phones.filter(phone => phone.price >= 400 && phone.price < 600);
                             break;
-                        case ">$600":
+                        case ">600":
                             phones = phones.filter(phone => phone.price >= 600);
                             break;  
                         default:
@@ -65,21 +65,33 @@ export default async function handler(req, res) {
             const all_brands_set = new Set();
             const all_os_set = new Set();
             const all_years_set = new Set();
+            const all_prices_set = new Set();
 
             for (const phone of phones) {
                 all_brands_set.add(phone.brand_name);
                 all_os_set.add(phone.os);
                 all_years_set.add(phone.released_at);
+                if (phone.price < 200) {
+                    all_prices_set.add("0-199")
+                } else if (phone.price >= 200 && phone.price < 400) {
+                    all_prices_set.add("200-399")
+                } else if (phone.price >= 400 && phone.price < 600) {
+                    all_prices_set.add("400-599")
+                } else if (phone.price >= 600) {
+                    all_prices_set.add(">600")
+                }       
             }
 
             const all_brands = [...all_brands_set];
             const all_os = [...all_os_set];
             const all_years = [...all_years_set];
+            const all_prices = [...all_prices_set]
             
             const filters = {
                 all_brands,
                 all_os,
-                all_years
+                all_years,
+                all_prices
             }
 
             phones = phones.slice(((page||1)-1)*20,(page||1)*20)

@@ -11,7 +11,6 @@ export default function Filter(props) {
     const [ deviceName, setDeviceName ] = useState("")
     const [ selectedDevice, setSelectedDevice ] = useState("")
     const sortOptions = ["price_low_to_high","price_high_to_low","model_asc","model_desc","release_year_asc","release_year_desc"]    
-    const priceOptions = ["$0-199","$200-399","$400-599",">$600"]
 
     const router = useRouter()
 
@@ -49,6 +48,7 @@ export default function Filter(props) {
         setOs("")
         setSort("")
         setYear("")
+        setPrice("")
     }
     const handleSelection = (e) => {
         setSelectedDevice(e)
@@ -62,6 +62,17 @@ export default function Filter(props) {
             router.replace({
                 query: { ...newQuery, page: 1 },
             })
+        }
+    }
+
+    const handleYearInput = (e) => {
+        if (e.key ==="Backspace") {
+            const newQuery = router.query
+            delete newQuery.year;
+            router.replace({
+                query: { ...newQuery},
+            })
+            setYear("")
         }
     }
 
@@ -84,7 +95,7 @@ export default function Filter(props) {
         setPrice(e)
         if (e) {
             router.replace({
-                query: { ...router.query, price: e },
+                query: { ...router.query, price: e, page: 1},
             })
         } else {
             const newQuery = router.query
@@ -154,24 +165,26 @@ export default function Filter(props) {
     }
 
     useEffect(()=> {
-        const { search, sort, brand, os, year } = router.query
+        const { search, sort, brand, os, year, price } = router.query
 
         if (search) setDeviceName(search)
         if (sort) setSort(sort)
         if (brand) setBrand(brand)
         if (os) setOs(os)
         if (year) setYear(year)       
+        if (price) setPrice(price)   
 
     },[router.query])
 
     return (
-        props.filters && props.allDevices &&
         <div className="filter">
+            {props.filters && props.allDevices &&
+            <>
             <Autocomplete
                 allowsCustomValue
                 className="w-full"
                 defaultFilter={myFilter}
-                defaultItems={props.allDevices || []}
+                // defaultItems={props.allDevices || []}
                 label="Search by name"
                 menuTrigger="input"
                 inputValue={deviceName}
@@ -180,10 +193,12 @@ export default function Filter(props) {
                 onInputChange={handleInputValue}
                 onClose={handleDeviceName}
                 >
-                {(item) => <AutocompleteItem key={item.name}>{item.name}</AutocompleteItem>}
+                {props.allDevices?.map((ele) => <AutocompleteItem key={ele}>{ele}</AutocompleteItem>)}
             </Autocomplete>
 
             <hr className="h-px py-px my-6 bg-gray-200 border-0"></hr>
+
+            <h3 className="mb-2 ml-2 text-gray-500 font-inherit">Filters</h3>
 
             <Autocomplete 
                 label="Sort by" 
@@ -229,6 +244,7 @@ export default function Filter(props) {
                 className="w-full"
                 selectedKey={year}
                 onSelectionChange={handelYear}
+                onKeyDown={handleYearInput}
             >
                 {props.filters.all_years?.map((ele) => (
                 <AutocompleteItem key={ele.toString()} value={ele.toString()} >
@@ -238,12 +254,12 @@ export default function Filter(props) {
             </Autocomplete>
 
             <Autocomplete 
-                label="Price" 
+                label="Price ($)" 
                 className="w-full"
                 selectedKey={price}
                 onSelectionChange={handlePrice}
             >
-                {priceOptions?.map((ele) => (
+                {props.filters.all_prices?.map((ele) => (
                 <AutocompleteItem key={ele} value={ele} >
                     {ele}
                 </AutocompleteItem>
@@ -252,6 +268,7 @@ export default function Filter(props) {
 
             <hr className="h-px py-px my-6 bg-gray-200 border-0"></hr>
             <button className="font-inherit text-[0.940rem] flex items-center hover:bg-on-hover-gray text-gray-500 relative px-3 py-2 transition duration-150 ease-in-out shadow-sm cursor-pointer h-14 min-h-10 rounded-xl" onClick={clearFilters} type="button">Clear all</button>
+        </>}
         </div>
     )
 }

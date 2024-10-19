@@ -38,7 +38,6 @@ export default function Pagination(props) {
     },[currentElements])
 
     const handleCurrentElements = (x) => {
-        console.log(maxElements)
         if (x === "next" && currentElements < maxElements) setCurrentElements(prev=>++prev)
         if (x === "prev" && currentElements > 1) setCurrentElements(prev=>--prev)
     }

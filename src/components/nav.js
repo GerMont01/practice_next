@@ -18,7 +18,7 @@ const Nav = () =>{
         const data = await response.json();
         dispatch(setCart(data))
         setFetched(true)
-        console.log(data)
+        console.log("fetched cart")
     }
     useEffect(()=>{
         if (!fetched) fetchInitialState()

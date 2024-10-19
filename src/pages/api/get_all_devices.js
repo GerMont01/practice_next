@@ -5,7 +5,7 @@ export default async function handler(req, res) {
         try {
             let phones = [...devices]
 
-            // const all_brands = [...new Set(phones.map(phone => phone.brand_name))]
+            phones = phones.map(phone => phone.name)
             // const all_os = [...new Set(phones.map(phone => phone.os))]
             // const all_years = [...new Set(phones.map(phone => phone.released_at))]
             
