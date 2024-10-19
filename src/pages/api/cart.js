@@ -1,5 +1,13 @@
 let cartItems = [];
 
+const getNumOfItems = () => {
+    let num_of_items = 0
+    for (let item of cartItems) {
+        num_of_items += item.quantity
+    }
+    return num_of_items
+}
+
 export default function handler(req, res) {
 
     const { method } = req
@@ -7,12 +15,30 @@ export default function handler(req, res) {
     switch (method) {
     
         case 'POST':
+            console.log("adding to cart...")
             const newItem = req.body
-            cartItems.push(newItem)
-            res.status(201).json({ message: 'Item added to cart', cart: cartItems })
+
+            const isInCar = () => {
+                for (let item of cartItems) {
+                    if (item.name === newItem.name) {
+                        item.quantity +=1
+                        return true
+                    }
+                }
+                return false
+            }
+
+            const is_in_car = isInCar()
+
+            if (!is_in_car) {
+                newItem.quantity = 1
+                cartItems.push(newItem)
+            }
+            
+            res.status(201).json({ message: 'Item added to cart', cart: cartItems, num_of_items: getNumOfItems()})
             break
         case 'GET':
-            res.status(200).json(cartItems)
+            res.status(200).json({cart:cartItems,num_of_items:getNumOfItems()})
             break
         case 'DELETE':
             const { id } = req.body

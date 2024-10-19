@@ -2,7 +2,7 @@ import Nav from "@/components/nav";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
-import { addToCart } from "../../store/reducer";
+import { setCart } from '@/store/reducer';
 
 export default function Product() {
     const pathname = usePathname()
@@ -11,8 +11,7 @@ export default function Product() {
     const [ device, setDevice ] = useState(undefined)
 
     const handleAddToCart = async () => {
-        // Dispatch the addToCart action with the selected product
-        dispatch(addToCart(device));
+        
         const addItem = await fetch('/api/cart', {
             method: 'POST',
             headers: {
@@ -21,6 +20,9 @@ export default function Product() {
             body: JSON.stringify(device),
         });
         const response = await addItem.json();
+        console.log(response)
+        dispatch(setCart({cart:response.cart,numOfItems:response.num_of_items}))
+        // dispatch(addToCart());
         alert(response.message)
     };
     
