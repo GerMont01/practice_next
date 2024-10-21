@@ -1,30 +1,12 @@
 import Nav from "@/components/nav";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
-import { setCart } from '@/store/reducer';
+import CartCounter from "@/components/cart_counter";
 
 export default function Product() {
     const pathname = usePathname()
-    const dispatch = useDispatch()
 
     const [ device, setDevice ] = useState(undefined)
-
-    const handleAddToCart = async () => {
-        
-        const addItem = await fetch('/api/cart', {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(device),
-        });
-        const response = await addItem.json();
-        console.log(response)
-        dispatch(setCart({cart:response.cart,numOfItems:response.num_of_items}))
-        // dispatch(addToCart());
-        alert(response.message)
-    };
     
     const fetchData = async (id) => {
         const response = await fetch(`/api/product_description?id=${id}`);
@@ -43,7 +25,7 @@ export default function Product() {
                     <div className="h-full">
                         <h1 className="mb-4 text-2xl font-bold">{device.name}</h1>
                         <img src={device.picture} alt={device.name} className="mb-4" />
-                        <button className="px-4 py-2 font-semibold text-gray-800 bg-white border border-gray-400 rounded shadow hover:bg-gray-200" onClick={handleAddToCart}>Add to Cart</button>
+                        <CartCounter device={device}/>
                         <p><strong>Brand:</strong> {device.brand_name}</p>
                         <p><strong>Released At:</strong> {device.released_at}</p>
                         <p><strong>Body:</strong> {device.body}</p>

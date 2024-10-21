@@ -41,9 +41,20 @@ export default function handler(req, res) {
             res.status(200).json({cart:cartItems,num_of_items:getNumOfItems()})
             break
         case 'DELETE':
-            const { id } = req.body
-            cartItems = cartItems.filter(item => item.id !== id)
-            res.status(200).json({ message: 'Item removed from cart', cart: cartItems })
+            const id = req.body
+            cartItems = cartItems.filter(item => {
+                if (item.id !== id) {
+                    return true
+                } else {
+                    if (item.quantity > 1) {
+                        item.quantity -= 1
+                        return true
+                    }
+                    else return false
+                }
+            })
+            res.status(200).json({ message: 'Item removed from cart', cart: cartItems, num_of_items: getNumOfItems()})
+            console.log(cartItems)
             break
         default:
             res.status(405).end(`Method ${method} Not Allowed`)
