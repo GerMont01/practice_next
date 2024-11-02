@@ -1,4 +1,4 @@
-import { useRouter } from "next/router"
+import { usePathname, useRouter, useSearchParams } from 'next/navigation'
 import { useEffect, useState } from "react"
 
 export default function Pagination(props) {
@@ -7,21 +7,24 @@ export default function Pagination(props) {
     const [ currentElements, setCurrentElements ] = useState(1)
     const [ pagesArray, setPagesArray ] = useState([])
     const [ maxElements, setMaxElements ] = useState(1)
+
     const router = useRouter()
+    const searchParams = useSearchParams()
+    const pathname = usePathname()
     
     const handelPage = (page) =>{
         setCurrentPage(page)
+        const params = new URLSearchParams(searchParams.toString())
         if (page) {
-            router.replace({
-                query: { ...router.query, page },
-            })
+            params.set("page", page)
+            router.push(`${pathname}?${params}`)
         }
     }
 
     useEffect(()=> {
-        const { page } = router.query
+        const page = searchParams.get("page")
         if (page) setCurrentPage(page)  
-    },[router.query])
+    },[searchParams])
 
     useEffect (()=>{
         const totalPages = props.totalPages

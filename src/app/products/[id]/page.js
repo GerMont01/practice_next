@@ -1,3 +1,4 @@
+"use client"
 import Nav from "@/components/nav";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";

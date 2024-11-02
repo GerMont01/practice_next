@@ -1,9 +1,10 @@
+"use client"
 import { ShoppingBagIcon } from '@heroicons/react/24/outline'
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
 import { setCart } from '@/store/reducer';
 import Link from 'next/link';
-import { useRouter } from 'next/router';
+import { useRouter } from 'next/navigation'
 
 const Nav = () =>{
 
@@ -19,16 +20,10 @@ const Nav = () =>{
         const data = await response.json();
         dispatch(setCart({cart:data.cart,numOfItems:data.num_of_items}))
         setFetched(true)
-        console.log("fetched cart")
     }
     useEffect(()=>{
         if (!fetched) fetchInitialState()
     },[])
-
-    useEffect(()=>{
-        console.log("num of items: ", numOfItems)
-        console.log("cart items: ", cartItems)
-    },[numOfItems,cartItems])
 
     return (
         <nav className="relative nav">

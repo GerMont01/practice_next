@@ -1,6 +1,7 @@
+"use client"
 import Filter from "@/components/filter";
 import { useEffect, useState } from "react";
-import { useRouter } from 'next/router';
+import { usePathname, useRouter, useSearchParams } from 'next/navigation'
 import {Spinner} from "@nextui-org/react";
 import Pagination from "@/components/pagination";
 
@@ -13,18 +14,20 @@ export default function Products() {
         all_years: []
     }) 
     const [ productQty, setProductQty ] = useState(0)
+
     const router = useRouter();
+    const searchParams = useSearchParams()
+    const pathname = usePathname()
 
     const fetchData = async () => {
-        const params = router.query
-        if (Object.keys(params).length === 0){
+        if (searchParams.size===0){
             const response = await fetch(`/api/products?page=1`);
             const { phones, total_products, filters } = await response.json();
             setProducts(phones)
             setProductQty(total_products)
             setFilterData(filters)
         } else {
-            const queryString = new URLSearchParams(params).toString();
+            const queryString = searchParams.toString()
             const response = await fetch(`/api/products?${queryString}`);
             const { phones, total_products, filters } = await response.json();
             setProducts(phones)
@@ -43,7 +46,7 @@ export default function Products() {
 
     useEffect(() => {
         fetchData()
-    }, [router.query])
+    }, [searchParams])
 
     useEffect(()=>{
         if (!allDevices) fetchAllDevices()

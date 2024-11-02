@@ -1,12 +1,13 @@
-import devices from "./devices.json"
+import { NextResponse } from "next/server";
+import devices from "../devices.json"
 
-export default async function handler(req, res) {
-
-    if (req.method === 'GET') {
+export async function GET(req) {
         try {
             let phones = [...devices]
-
-            const { price, search, brand, os, year, sort, page } = req.query
+            const { searchParams } = new URL(req.url);
+            const query = Object.fromEntries(searchParams)
+            
+            const { price, search, brand, os, year, sort, page } = query
 
             if (search) {
                 phones = phones.filter(phone => phone.name.toLowerCase().includes(search.toLowerCase())); 
@@ -101,12 +102,18 @@ export default async function handler(req, res) {
                 total_products,
                 filters
             }
-
-            res.status(200).json(response);
-        } catch {
-            return res.status(500).json({error:"Data could not be retrieved"});
+            
+            return NextResponse.json(response,{
+                status: 200,
+            });
+        } catch (error) {
+            return NextResponse.json(
+                { 
+                    error: error 
+                },
+                {
+                    status: 500,
+                }
+            );
         }
-    } else {
-      res.status(405).json({ message: 'Method not allowed' });
-    }
   }

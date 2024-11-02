@@ -1,7 +1,7 @@
-import devices from "./devices.json"
+import { NextResponse } from "next/server";
+import devices from "../devices.json"
 
-export default async function handler(req, res) {
-    if (req.method === 'GET') {
+export async function GET(req) {
         try {
             let phones = [...devices]
 
@@ -16,12 +16,16 @@ export default async function handler(req, res) {
             //     all_years
             // }
 
-            res.status(200).json(phones);
+            return NextResponse.json(phones,{
+                status: 200,
+            });
 
-        } catch {
-            return res.status(500).json({error:"Data could not be retrieved"});
+        } catch (error) {
+            return NextResponse.json(
+                { error: error },
+                {
+                  status: 500,
+                }
+              );
         }
-    } else {
-        res.status(405).json({ message: 'Method not allowed' });
-    }
 }

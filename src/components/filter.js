@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import { useRouter } from "next/router"
+import { usePathname, useRouter, useSearchParams } from 'next/navigation'
 import {Autocomplete, AutocompleteItem} from "@nextui-org/react";
 
 export default function Filter(props) {
@@ -7,12 +7,14 @@ export default function Filter(props) {
     const [ brand, setBrand ] = useState("")
     const [ os, setOs ] = useState("")
     const [ year, setYear ] = useState("")
-    const [ sort, setSort ] = useState("")
+    const [ sortItems, setSortItems ] = useState("")
     const [ deviceName, setDeviceName ] = useState("")
     const [ selectedDevice, setSelectedDevice ] = useState("")
     const sortOptions = ["price_low_to_high","price_high_to_low","model_asc","model_desc","release_year_asc","release_year_desc"]    
 
     const router = useRouter()
+    const searchParams = useSearchParams()
+    const pathname = usePathname()
 
     const myFilter = (optionsValue, inputValue) => {
         if (inputValue === null) return
@@ -32,21 +34,19 @@ export default function Filter(props) {
 
     const handleDeviceName = () => {
         if (selectedDevice) {
-            router.replace({
-                query: { search: selectedDevice, page: 1 },
-            })
+            const params = { search: selectedDevice, page: 1 }
+            router.push(`${pathname}?${params}`)
             setDeviceName(selectedDevice)
             setSelectedDevice(null)
         } else {
             if (deviceName) {
-                router.replace({
-                    query: { search: deviceName, page: 1 },
-                })
+                const params = { search: deviceName, page: 1 }
+                router.push(`${pathname}?${params}`)
             } 
         }
         setBrand("")
         setOs("")
-        setSort("")
+        setSortItems("")
         setYear("")
         setPrice("")
     }
@@ -57,97 +57,88 @@ export default function Filter(props) {
     const handleInputValue = (e) => {
         setDeviceName(e)
         if (!e) {
-            const newQuery = router.query
-            delete newQuery.search;
-            router.replace({
-                query: { ...newQuery, page: 1 },
-            })
+            const params = new URLSearchParams(searchParams.toString())
+            params.delete("search")
+            router.push(`${pathname}?${params}`)
         }
     }
 
     const handleYearInput = (e) => {
         if (e.key ==="Backspace") {
-            const newQuery = router.query
-            delete newQuery.year;
-            router.replace({
-                query: { ...newQuery},
-            })
+            const params = new URLSearchParams(searchParams.toString())
+            params.delete("year")
+            router.push(`${pathname}?${params}`)
             setYear("")
         }
     }
 
     const handleSort = (e) => {
-        setSort(e)
+        setSortItems(e)
+        const params = new URLSearchParams(searchParams.toString())
         if (e) {
-            router.replace({
-                query: { ...router.query, sort: e },
-            })
+            params.set("sort", e)
+            params.set("page", 1)
+            router.push(`${pathname}?${params}`)
         } else {
-            const newQuery = router.query
-            delete newQuery.sort;
-            router.replace({
-                query: { ...newQuery, page: 1 },
-            })
+            params.delete("sort")
+            params.set("page", 1)
+            router.push(`${pathname}?${params}`)
         }
     }
 
     const handlePrice = (e) => {
         setPrice(e)
+        const params = new URLSearchParams(searchParams.toString())
         if (e) {
-            router.replace({
-                query: { ...router.query, price: e, page: 1},
-            })
+            params.set("price", e)
+            params.set("page", 1)
+            router.push(`${pathname}?${params}`)
         } else {
-            const newQuery = router.query
-            delete newQuery.price;
-            router.replace({
-                query: { ...newQuery, page: 1 },
-            })
+            params.delete("price")
+            params.set("page", 1)
+            router.push(`${pathname}?${params}`)
         }
     }
 
     const handleBrand = (e) => {
         setBrand(e)
+        const params = new URLSearchParams(searchParams.toString())
         if (e) {
-            router.replace({
-                query: { ...router.query, brand: e, page: 1 },
-            })
+            params.set("brand", e)
+            params.set("page", 1)
+            router.push(`${pathname}?${params}`)
         } else {
-            const newQuery = router.query
-            delete newQuery.brand;
-            router.replace({
-                query: { ...newQuery, page: 1 },
-            })
+            params.delete("brand")
+            params.set("page", 1)
+            router.push(`${pathname}?${params}`)
         }
     }
 
     const handleOs = (e) => {
         setOs(e)
+        const params = new URLSearchParams(searchParams.toString())
         if (e) {
-            router.replace({
-                query: { ...router.query, os: e, page: 1 },
-            })
+            params.set("os", e)
+            params.set("page", 1)
+            router.push(`${pathname}?${params}`)
         } else {
-            const newQuery = router.query
-            delete newQuery.os;
-            router.replace({
-                query: { ...newQuery, page: 1 },
-            })
+            params.delete("os")
+            params.set("page", 1)
+            router.push(`${pathname}?${params}`)
         }
     }
 
     const handelYear = (e) => {
         setYear(e)
+        const params = new URLSearchParams(searchParams.toString())
         if (e) {
-            router.replace({
-                query: { ...router.query, year: e, page: 1 },
-            })
+            params.set("year", e)
+            params.set("page", 1)
+            router.push(`${pathname}?${params}`)
         } else {
-            const newQuery = router.query
-            delete newQuery.year;
-            router.replace({
-                query: { ...newQuery, page: 1 },
-            })
+            params.delete("year")
+            params.set("page", 1)
+            router.push(`${pathname}?${params}`)
         }
     }
 
@@ -157,24 +148,26 @@ export default function Filter(props) {
         setDeviceName("")
         setOs("")
         setSelectedDevice(null)
-        setSort("")
+        setSortItems("")
         setYear("")
-        router.replace({
-            query: { page: 1 },
-        })
+        router.push(`${pathname}?page=1`)
     }
 
     useEffect(()=> {
-        const { search, sort, brand, os, year, price } = router.query
+        if (searchParams) {
 
-        if (search) setDeviceName(search)
-        if (sort) setSort(sort)
-        if (brand) setBrand(brand)
-        if (os) setOs(os)
-        if (year) setYear(year)       
-        if (price) setPrice(price)   
+            const query = Object.fromEntries(searchParams)
+            
+            const { price, search, brand, os, year, sort } = query
 
-    },[router.query])
+            if (search) setDeviceName(search)
+            if (sort) setSortItems(sort)
+            if (brand) setBrand(brand)
+            if (os) setOs(os)
+            if (year) setYear(year)       
+            if (price) setPrice(price)   
+        }
+    },[searchParams])
 
     return (
         <div className="filter">
@@ -203,7 +196,7 @@ export default function Filter(props) {
             <Autocomplete 
                 label="Sort by" 
                 className="w-full"
-                selectedKey={sort}
+                selectedKey={sortItems}
                 onSelectionChange={handleSort}
             >
                 {sortOptions?.map((ele) => (

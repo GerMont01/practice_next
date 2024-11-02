@@ -1,5 +1,5 @@
 import { setCart } from "@/store/reducer";
-import { useRouter } from "next/router";
+import { useRouter } from 'next/navigation'
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -18,6 +18,7 @@ const CartCounter = (props) => {
             body: JSON.stringify(props.device),
         });
         const response = await addItem.json();
+        console.log(response.cart)
         dispatch(setCart({cart:response.cart,numOfItems:response.num_of_items}))
         // dispatch(addToCart());
         alert(response.message)
@@ -32,9 +33,7 @@ const CartCounter = (props) => {
             body: JSON.stringify(props.device.id),
         });
         const response = await addItem.json();
-        console.log(response)
         dispatch(setCart({cart:response.cart,numOfItems:response.num_of_items}))
-        // dispatch(addToCart());
         alert(response.message)
     };
 
