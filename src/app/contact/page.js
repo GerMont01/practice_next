@@ -1,6 +1,5 @@
 "use client"
 import { useState } from 'react';
-import Nav from '@/components/nav';
 
 export default function Contact() {
   const [form, setForm] = useState({ name: '', email: '', message: '' });
@@ -28,7 +27,6 @@ export default function Contact() {
     <div className="flex items-center justify-center h-screen bg-gray-100">
       <div className="p-8 bg-white rounded shadow-lg">
         <h1 className="mb-4 text-2xl font-bold">Contact Us</h1>
-        <Nav />
         <form onSubmit={handleSubmit}>
           <div className="mb-4">
             <label className="block mb-2 text-sm font-bold text-gray-700" htmlFor="name">

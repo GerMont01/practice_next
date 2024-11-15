@@ -6,9 +6,7 @@ import { setCart } from '@/store/reducer';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation'
 
-const Nav = () =>{
-
-    const cartItems = useSelector((state) => state.cart.items)
+const Nav = () => {
     const numOfItems = useSelector((state) => state.cart.numOfItems)
     const dispatch = useDispatch()
     const router = useRouter();

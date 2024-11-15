@@ -66,11 +66,13 @@ const CartCounter = (props) => {
                         > +
                     </button>
                 </div>
-                <button 
-                className="px-4 py-2 font-semibold text-gray-800 bg-white border border-gray-400 rounded shadow hover:bg-gray-200" 
-                onClick={()=>router.push(`/cart`)}
-                >Go to Cart
-            </button>
+                {!props.cartPage &&
+                    <button 
+                        className="px-4 py-2 font-semibold text-gray-800 bg-white border border-gray-400 rounded shadow hover:bg-gray-200" 
+                        onClick={()=>router.push(`/cart`)}
+                    >Go to Cart
+                    </button>
+                }
             </div>
         )}
         </div>

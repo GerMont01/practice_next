@@ -1,7 +1,7 @@
 "use client"
 import Filter from "@/components/filter";
 import { useEffect, useState } from "react";
-import { usePathname, useRouter, useSearchParams } from 'next/navigation'
+import { useRouter, useSearchParams } from 'next/navigation'
 import {Spinner} from "@nextui-org/react";
 import Pagination from "@/components/pagination";
 
@@ -15,9 +15,8 @@ export default function Products() {
     }) 
     const [ productQty, setProductQty ] = useState(0)
 
-    const router = useRouter();
+    const router = useRouter()
     const searchParams = useSearchParams()
-    const pathname = usePathname()
 
     const fetchData = async () => {
         if (searchParams.size===0){
