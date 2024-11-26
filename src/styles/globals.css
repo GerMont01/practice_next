@@ -27,8 +27,11 @@
     width: 75%;
   }
   .product {
-    @apply flex flex-col items-center p-2 m-3 transition duration-200 sm:w-24 md:w-32 lg:w-36 xl:w-40 hover:scale-105 hover:cursor-pointer;
+    @apply bg-white flex flex-col items-center p-2 m-3 transition duration-200 sm:w-40 md:w-44 lg:w-48 xl:w-52 hover:scale-105 hover:cursor-pointer;
     border-radius: 5px;
     box-shadow: 0 0 10px 5px rgba(0, 0, 0, 0.1);
+  }
+  .container {
+    height: calc(100vh - 80px);
   }
 }
