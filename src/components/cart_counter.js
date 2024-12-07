@@ -47,28 +47,28 @@ const CartCounter = (props) => {
         <div>
         {quantity === 0 ? (
             <button 
-                className="px-4 py-2 font-semibold text-gray-800 bg-white border border-gray-400 rounded shadow hover:bg-gray-200" 
+                className="px-3 py-2 text-sm font-semibold text-gray-800 bg-white border shadow rounded-2xl hover:bg-orange-400" 
                 onClick={handleAddToCart}
                 >Add to Cart
             </button>
         ) : (
-            <div>
-                <div>
+            <div className="flex items-center">
+                <div className="flex items-center">
                     <button 
-                        className="px-4 py-2 font-semibold text-gray-800 bg-white border border-gray-400 rounded shadow hover:bg-gray-200" 
+                        className="font-semibold text-gray-800 bg-white border rounded-full shadow w-7 h-7 hover:bg-orange-400"  
                         onClick={handleRemoveFromCart}
                         > -
                     </button>
-                    <p>{quantity}</p>
+                    <p className="m-2">{quantity}</p>
                     <button 
-                        className="px-4 py-2 font-semibold text-gray-800 bg-white border border-gray-400 rounded shadow hover:bg-gray-200" 
+                        className="font-semibold text-gray-800 bg-white border rounded-full shadow w-7 h-7 hover:bg-orange-400" 
                         onClick={handleAddToCart}
                         > +
                     </button>
                 </div>
                 {!props.cartPage &&
                     <button 
-                        className="px-4 py-2 font-semibold text-gray-800 bg-white border border-gray-400 rounded shadow hover:bg-gray-200" 
+                        className="p-1 m-2 text-sm font-semibold text-gray-800 h-7 hover:text-orange-400" 
                         onClick={()=>router.push(`/cart`)}
                     >Go to Cart
                     </button>

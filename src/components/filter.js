@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react"
 import { usePathname, useRouter, useSearchParams } from 'next/navigation'
 import {Autocomplete, AutocompleteItem} from "@nextui-org/react";
+import { useRef } from 'react';
 
 export default function Filter(props) {
     const [ price,setPrice ] = useState("")
@@ -15,11 +16,12 @@ export default function Filter(props) {
     const router = useRouter()
     const searchParams = useSearchParams()
     const pathname = usePathname()
+    const autoCompleteRef = useRef(null);
 
     const myFilter = (optionsValue, inputValue) => {
-        if (inputValue === null) return
+        if (inputValue === null) return false
         if (inputValue.length === 0) {
-          return
+          return false
         }
         
         optionsValue = optionsValue.normalize("NFC").toLocaleLowerCase();
@@ -27,22 +29,21 @@ export default function Filter(props) {
 
         if (inputValue.length === 1) {
             return optionsValue[0] === inputValue;
-        } else {
+        } else if (inputValue.length > 1) {
             return optionsValue.includes(inputValue);
         }    
     }
 
-    const handleDeviceName = () => {
-        if (selectedDevice) {
-            const params = { search: selectedDevice, page: 1 }
+    const handleSelection = (e) => {
+        setSelectedDevice(e)
+        const params = new URLSearchParams()
+        if (e) {
+            params.set("search", e)
+            params.set("page", 1)
             router.push(`${pathname}?${params}`)
-            setDeviceName(selectedDevice)
-            setSelectedDevice(null)
         } else {
-            if (deviceName) {
-                const params = { search: deviceName, page: 1 }
-                router.push(`${pathname}?${params}`)
-            } 
+            params.delete("search")
+            router.push(`${pathname}?${params}`)
         }
         setBrand("")
         setOs("")
@@ -50,15 +51,28 @@ export default function Filter(props) {
         setYear("")
         setPrice("")
     }
-    const handleSelection = (e) => {
-        setSelectedDevice(e)
-    }
 
     const handleInputValue = (e) => {
         setDeviceName(e)
+        setTimeout(()=>{
+            autoCompleteRef.current.focus()
+        },10)
         if (!e) {
-            const params = new URLSearchParams(searchParams.toString())
-            params.delete("search")
+            const params = new URLSearchParams()
+            router.push(`${pathname}?${params}`)
+            setBrand("")
+            setOs("")
+            setSortItems("")
+            setYear("")
+            setPrice("")
+        }
+    }
+
+    const handleEnter = (e) => {
+        if (e.key === "Enter") {
+            const params = new URLSearchParams()
+            params.set("search", deviceName)
+            params.set("page", 1)
             router.push(`${pathname}?${params}`)
         }
     }
@@ -180,11 +194,12 @@ export default function Filter(props) {
                 // defaultItems={props.allDevices || []}
                 label="Search by name"
                 menuTrigger="input"
-                inputValue={deviceName}
+                // inputValue={deviceName}
                 selectedKey={selectedDevice}
                 onSelectionChange={handleSelection}
                 onInputChange={handleInputValue}
-                onClose={handleDeviceName}
+                onKeyDown={handleEnter}
+                ref={autoCompleteRef}
                 >
                 {props.allDevices?.map((ele) => <AutocompleteItem key={ele}>{ele}</AutocompleteItem>)}
             </Autocomplete>
@@ -196,6 +211,7 @@ export default function Filter(props) {
             <Autocomplete 
                 label="Sort by" 
                 className="w-full"
+                onClick={(e) => e.target.focus()}
                 selectedKey={sortItems}
                 onSelectionChange={handleSort}
             >
@@ -209,6 +225,7 @@ export default function Filter(props) {
             <Autocomplete 
                 label="Brand" 
                 className="w-full"
+                onClick={(e) => e.target.focus()}
                 selectedKey={brand}
                 onSelectionChange={handleBrand}
             >
@@ -222,6 +239,7 @@ export default function Filter(props) {
             <Autocomplete 
                 label="OS" 
                 className="w-full"
+                onClick={(e) => e.target.focus()}
                 selectedKey={os}
                 onSelectionChange={handleOs}
             >
@@ -235,6 +253,7 @@ export default function Filter(props) {
             <Autocomplete 
                 label="Release Year" 
                 className="w-full"
+                onClick={(e) => e.target.focus()}
                 selectedKey={year}
                 onSelectionChange={handelYear}
                 onKeyDown={handleYearInput}
@@ -249,6 +268,7 @@ export default function Filter(props) {
             <Autocomplete 
                 label="Price ($)" 
                 className="w-full"
+                onClick={(e) => e.target.focus()}
                 selectedKey={price}
                 onSelectionChange={handlePrice}
             >

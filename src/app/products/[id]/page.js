@@ -42,8 +42,8 @@ export default function Product() {
                             <p><strong>Battery Size:</strong> {device.battery_size}</p>
                             <p><strong>Battery Type:</strong> {device.battery_type}</p>
                             <div className="flex items-center mt-6 mb-3 cursor-pointer" onClick={()=>setShowDetails(prev=>!prev)}>
-                                <h2 className="text-xl font-semibold">More details</h2>
-                                <ChevronDownIcon className="size-4"/>
+                                <h2 className="text-xl font-semibold hover:text-orange-400">More details</h2>
+                                <ChevronDownIcon className="text-orange-400 size-6"/>
                             </div>
                             <ul className="overflow-auto list-disc h-36">
                                 {showDetails &&

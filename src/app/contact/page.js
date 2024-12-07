@@ -25,15 +25,12 @@ export default function Contact() {
 
   return (
     <div className="flex items-center justify-center h-screen bg-gray-100">
-      <div className="p-8 bg-white rounded shadow-lg">
+      <div className="w-1/3 p-8 bg-white rounded shadow-lg">
         <h1 className="mb-4 text-2xl font-bold">Contact Us</h1>
         <form onSubmit={handleSubmit}>
           <div className="mb-4">
-            <label className="block mb-2 text-sm font-bold text-gray-700" htmlFor="name">
-              Name:
-            </label>
             <input
-              className="w-full px-3 py-2 leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
+              className="w-full px-3 py-2 text-sm transition-all bg-gray-100 rounded-md shadow-sm outline-none focus:ring-2 focus:ring-gray-200 h-14 placeholder:text-gray-500"
               id="name"
               type="text"
               placeholder="Enter your name"
@@ -44,11 +41,8 @@ export default function Contact() {
             />
           </div>
           <div className="mb-4">
-            <label className="block mb-2 text-sm font-bold text-gray-700" htmlFor="email">
-              Email:
-            </label>
             <input
-              className="w-full px-3 py-2 leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
+              className="w-full px-3 py-2 text-sm transition-all bg-gray-100 rounded-md shadow-sm outline-none focus:ring-2 focus:ring-gray-200 h-14 placeholder:text-gray-500"
               id="email"
               type="email"
               placeholder="Enter your email"
@@ -59,11 +53,8 @@ export default function Contact() {
             />
           </div>
           <div className="mb-4">
-            <label className="block mb-2 text-sm font-bold text-gray-700" htmlFor="message">
-              Message:
-            </label>
             <textarea
-              className="w-full px-3 py-2 leading-tight text-gray-700 border rounded shadow appearance-none focus:outline-none focus:shadow-outline"
+              className="w-full h-20 px-3 py-2 text-sm transition-all bg-gray-100 rounded-md shadow-sm outline-none focus:ring-2 focus:ring-gray-200 placeholder:text-gray-500"
               id="message"
               placeholder="Enter your message"
               name="message"
@@ -73,7 +64,7 @@ export default function Contact() {
             ></textarea>
           </div>
           <button
-            className="px-4 py-2 text-white bg-blue-500 rounded hover:bg-blue-600"
+            className="px-5 py-3 text-sm bg-white border shadow rounded-xl hover:bg-orange-400"
             type="submit"
           >
             Submit

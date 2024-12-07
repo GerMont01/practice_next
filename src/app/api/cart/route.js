@@ -48,7 +48,8 @@ export async function POST(req) {
             id:newItem.id,
             name:newItem.name,
             picture: newItem.picture,
-            quantity:newItem.quantity
+            quantity:newItem.quantity,
+            price:newItem.price
         })
     }
 

@@ -1,9 +1,9 @@
-export default function handler(req, res) {
-    if (req.method === 'POST') {
-      const { name, email, message } = req.body;
-      console.log(name,email,message)
-      res.status(200).json({ message: 'Form submitted successfully!' });
-    } else {
-      res.status(405).json({ message: 'Method not allowed' });
-    }
+import { NextResponse } from "next/server";
+
+export async function POST(req) {
+    const { name, email, message } = await req.json()
+    console.log(name,email,message)
+    return NextResponse.json({ message: "Form submitted successfully!" }, {
+      status: 200,
+    });
   }
