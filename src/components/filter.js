@@ -8,10 +8,12 @@ export default function Filter(props) {
     const [ brand, setBrand ] = useState("")
     const [ os, setOs ] = useState("")
     const [ year, setYear ] = useState("")
+    const [ productType, setProductType ] = useState("")
     const [ sortItems, setSortItems ] = useState("")
     const [ deviceName, setDeviceName ] = useState("")
     const [ selectedDevice, setSelectedDevice ] = useState("")
     const sortOptions = ["price_low_to_high","price_high_to_low","model_asc","model_desc","release_year_asc","release_year_desc"]    
+    const typeOptions = ["Mobile","Smart Watch"] 
 
     const router = useRouter()
     const searchParams = useSearchParams()
@@ -45,6 +47,7 @@ export default function Filter(props) {
             params.delete("search")
             router.push(`${pathname}?${params}`)
         }
+        setProductType("")
         setBrand("")
         setOs("")
         setSortItems("")
@@ -60,6 +63,7 @@ export default function Filter(props) {
         if (!e) {
             const params = new URLSearchParams()
             router.push(`${pathname}?${params}`)
+            setProductType("")
             setBrand("")
             setOs("")
             setSortItems("")
@@ -83,6 +87,20 @@ export default function Filter(props) {
             params.delete("year")
             router.push(`${pathname}?${params}`)
             setYear("")
+        }
+    }
+
+    const handleProductType = (e) => {
+        setProductType(e)
+        const params = new URLSearchParams(searchParams.toString())
+        if (e) {
+            params.set("type", e)
+            params.set("page", 1)
+            router.push(`${pathname}?${params}`)
+        } else {
+            params.delete("type")
+            params.set("page", 1)
+            router.push(`${pathname}?${params}`)
         }
     }
 
@@ -157,6 +175,7 @@ export default function Filter(props) {
     }
 
     const clearFilters = () =>{
+        setProductType("")
         setPrice("")
         setBrand("")
         setDeviceName("")
@@ -172,9 +191,10 @@ export default function Filter(props) {
 
             const query = Object.fromEntries(searchParams)
             
-            const { price, search, brand, os, year, sort } = query
+            const { price, search, brand, os, year, sort, type } = query
 
             if (search) setDeviceName(search)
+            if (type) setProductType(type)
             if (sort) setSortItems(sort)
             if (brand) setBrand(brand)
             if (os) setOs(os)
@@ -216,6 +236,20 @@ export default function Filter(props) {
                 onSelectionChange={handleSort}
             >
                 {sortOptions?.map((ele) => (
+                <AutocompleteItem key={ele} value={ele} >
+                    {ele}
+                </AutocompleteItem>
+                ))}
+            </Autocomplete>
+
+            <Autocomplete 
+                label="Product type" 
+                className="w-full"
+                onClick={(e) => e.target.focus()}
+                selectedKey={productType}
+                onSelectionChange={handleProductType}
+            >
+                {typeOptions?.map((ele) => (
                 <AutocompleteItem key={ele} value={ele} >
                     {ele}
                 </AutocompleteItem>

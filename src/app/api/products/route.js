@@ -7,7 +7,7 @@ export async function GET(req) {
             const { searchParams } = new URL(req.url);
             const query = Object.fromEntries(searchParams)
             
-            const { price, search, brand, os, year, sort, page } = query
+            const { price, search, brand, os, year, sort, type, page } = query
 
             if (search) {
                 phones = phones.filter(phone => phone.name.toLowerCase().includes(search.toLowerCase())); 
@@ -15,6 +15,18 @@ export async function GET(req) {
                 if (brand) phones = phones.filter(phone => phone.brand_name === brand); 
                 if (os) phones = phones.filter(phone => phone.os === os); 
                 if (year) phones = phones.filter(phone => phone.released_at.toString() === year);
+                if (type){
+                    switch (type) {
+                        case "Mobile":
+                            phones = phones.filter(phone => !phone.os.includes("Proprietary")&&!phone.os.includes("Wear")&&!phone.os.includes("watch"))
+                            break;
+                        case "Smart Watch":
+                            phones = phones.filter(phone => phone.os.includes("Proprietary")||phone.os.includes("Wear")||phone.os.includes("watch"))
+                            break;
+                        default:
+                            break;
+                    }
+                }
                 if (price){
                     switch (price) {
                         case "0-199":
@@ -37,10 +49,10 @@ export async function GET(req) {
                 if (sort){
                     switch (sort) {
                         case "price_low_to_high":
-                            phones.sort((a,b)=>a.price - b.price)
+                            phones.sort((a,b)=>parseInt(a.price) - parseInt(b.price))
                             break;
                         case "price_high_to_low":
-                        phones.sort((a,b)=>b.price - a.price)
+                        phones.sort((a,b)=>parseInt(b.price) - parseInt(a.price))
                             break;
                         case "model_asc":
                             phones.sort((a,b)=>a.name.localeCompare(b.name))
