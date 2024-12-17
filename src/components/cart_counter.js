@@ -18,9 +18,7 @@ const CartCounter = (props) => {
             body: JSON.stringify(props.device),
         });
         const response = await addItem.json();
-        console.log(response.cart)
         dispatch(setCart({cart:response.cart,numOfItems:response.num_of_items}))
-        // dispatch(addToCart());
         alert(response.message)
     }
 
