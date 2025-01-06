@@ -9,10 +9,10 @@
 
 @layer components {
   .nav {
-    @apply sticky top-0 flex items-center justify-center h-20 bg-white shadow-sm;
+    @apply sticky top-0 flex items-center justify-start h-20 ml-32 bg-white shadow-sm;
   }
   .link {
-    @apply inline-block p-4 m-4 rounded hover:bg-blue-100;
+    @apply inline-block p-4 m-4 rounded hover:text-orange-400;
   }
   .filter {
     position: sticky;
@@ -27,7 +27,7 @@
     width: 75%;
   }
   .product {
-    @apply bg-white flex flex-col items-center p-2 m-3 transition duration-200 sm:w-40 md:w-44 lg:w-48 xl:w-52 hover:scale-105 hover:cursor-pointer;
+    @apply flex flex-col items-center p-2 m-3 transition duration-200 bg-white sm:w-40 md:w-44 lg:w-48 xl:w-52 hover:scale-105 hover:cursor-pointer;
     border-radius: 5px;
     box-shadow: 0 0 10px 5px rgba(0, 0, 0, 0.1);
   }

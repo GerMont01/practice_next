@@ -5,6 +5,8 @@ import { useEffect, useState } from 'react';
 import { setCart } from '@/store/reducer';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation'
+import Image from "next/image";
+import supermobilelogo from "../images/SuperMobileLogo.png";
 
 const Nav = () => {
     const numOfItems = useSelector((state) => state.cart.numOfItems)
@@ -26,7 +28,13 @@ const Nav = () => {
 
     return (
         <nav className="relative nav">
-            <Link href="/" className="link">Home</Link>| 
+            <Link href="/" className="h-full"> 
+                <Image
+                    src={supermobilelogo}
+                    alt="Super Mobile Logo"
+                    class="h-full w-auto"
+                />
+            </Link>
             <Link href="/about" className="link">About</Link>|
             <div className="relative" onMouseEnter={()=>setIsOpen(true)} onMouseLeave={()=>setIsOpen(false)}>
                 <Link href="/products" className="z-10 link">Products</Link>|
@@ -37,9 +45,9 @@ const Nav = () => {
                     </div>
                 }
             </div>
-            <Link href="/contact" className="link">Contact</Link>| 
+            <Link href="/contact" className="link">Contact</Link>
             <div 
-                className="absolute inline-block p-4 m-4 rounded cursor-pointer hover:bg-blue-100 right-10"
+                className="absolute inline-block p-4 m-4 rounded cursor-pointer hover:text-orange-400 right-10"
                 onClick={()=>router.push(`/cart`)}
             >
                 <ShoppingBagIcon className="size-6" />
