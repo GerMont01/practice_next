@@ -54,8 +54,7 @@ export default function Products() {
     
     return (
         <div className="container h-full max-w-full bg-gray-100">
-            {/* <Nav /> */}
-            <div className="flex w-full place-content-between">
+            <div className="flex flex-col w-full lg:flex-row place-content-between">
                 <Filter allDevices={allDevices} filters={filterData}/>
                 <div className="products">
                 {products !== undefined ? (
@@ -63,7 +62,7 @@ export default function Products() {
                     <>
                         {products.map((product,i)=>(
                             <div className="product" key={i}>
-                                <div className="flex flex-col h-12 m-6 align-middle justify-evenly">
+                                <div className="flex flex-col h-12 m-2 align-middle lg:m-6 justify-evenly">
                                     <p className="text-sm font-bold text-center">{product.name}</p>
                                     <p className="text-sm font-bold text-center">({product.released_at})</p>
                                 </div>

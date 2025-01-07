@@ -204,7 +204,7 @@ export default function Filter(props) {
     },[searchParams])
 
     return (
-        <div className="filter">
+        <div className="lg:filter">
             {props.filters && props.allDevices &&
             <>
             <Autocomplete

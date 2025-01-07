@@ -28,7 +28,7 @@ const Nav = () => {
 
     return (
         <nav className="relative nav">
-            <Link href="/" className="h-full"> 
+            <Link href="/" className="h-4/5 lg:h-full"> 
                 <Image
                     src={supermobilelogo}
                     alt="Super Mobile Logo"
@@ -47,7 +47,7 @@ const Nav = () => {
             </div>
             <Link href="/contact" className="link">Contact</Link>
             <div 
-                className="absolute inline-block p-4 m-4 rounded cursor-pointer hover:text-orange-400 right-10"
+                className="absolute right-0 inline-block p-4 rounded cursor-pointer lg:m-4 hover:text-orange-400 lg:right-10"
                 onClick={()=>router.push(`/cart`)}
             >
                 <ShoppingBagIcon className="size-6" />

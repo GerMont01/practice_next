@@ -21,11 +21,11 @@ export default function Product() {
     },[pathname])
 
     return (
-        <div className="container max-w-full bg-gray-100 product_description">
+        <div className="max-w-full bg-gray-100 lg:container product_description">
             {device ? (
-                <div className="flex h-full p-10 justify-evenly">     
-                    <div className="flex flex-col items-center justify-center w-1/2 h-full">
-                        <div className="w-3/5 h-full">
+                <div className="flex flex-col h-full p-3 lg:p-10 lg:flex-row justify-evenly">     
+                    <div className="flex flex-col items-center justify-center h-full lg:w-1/2">
+                        <div className="w-full h-full lg:w-3/5">
                             <h1 className="mt-10 mb-4 text-2xl font-bold">{device.name}</h1>
                             {/* <img src={device.picture} alt={device.name} className="mb-4" /> */}
                             <p><strong>Brand:</strong> {device.brand_name}</p>
@@ -45,15 +45,17 @@ export default function Product() {
                                 <h2 className="text-xl font-semibold hover:text-orange-400">More details</h2>
                                 <ChevronDownIcon className="text-orange-400 size-6"/>
                             </div>
-                            <ul className="overflow-auto list-disc h-36">
-                                {showDetails &&
-                                    Object.entries(JSON.parse(device.specifications)).map(([key, value]) => (
-                                        <li key={key}><strong>{key.replace(/_/g, ' ')}:</strong> {value}</li>
-                                ))}
-                            </ul>
+                            {showDetails &&
+                                <ul className="overflow-auto list-disc h-36">
+                                    {showDetails &&
+                                        Object.entries(JSON.parse(device.specifications)).map(([key, value]) => (
+                                            <li key={key}><strong>{key.replace(/_/g, ' ')}:</strong> {value}</li>
+                                    ))}
+                                </ul>
+                            }
                         </div>
                     </div>
-                    <div className="flex flex-col items-center w-1/2 m-8 bg-white">
+                    <div className="flex flex-col items-center w-full p-8 bg-white lg:w-1/2">
                         <img className="w-2/5 mb-10 m-14" src={device.picture} alt={device.name}/>
                         <CartCounter  className="w-2/5" device={device}/>
                     </div>
