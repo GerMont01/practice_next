@@ -32,7 +32,7 @@ const Nav = () => {
                 <Image
                     src={supermobilelogo}
                     alt="Super Mobile Logo"
-                    class="h-full w-auto"
+                    className="w-auto h-full"
                 />
             </Link>
             <Link href="/about" className="link">About</Link>|

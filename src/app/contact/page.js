@@ -24,8 +24,8 @@ export default function Contact() {
   };
 
   return (
-    <div className="flex items-center justify-center h-screen bg-gray-100">
-      <div className="w-1/3 p-8 bg-white rounded shadow-lg">
+    <div className="flex items-center justify-center min-h-screen bg-gray-100">
+      <div className="w-5/6 p-8 m-2 bg-white rounded shadow-lg lg:w-1/3">
         <h1 className="mb-4 text-2xl font-bold">Contact Us</h1>
         <form onSubmit={handleSubmit}>
           <div className="mb-4">

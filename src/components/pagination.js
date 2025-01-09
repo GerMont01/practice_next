@@ -23,21 +23,24 @@ export default function Pagination(props) {
 
     useEffect(()=> {
         const page = searchParams.get("page")
-        if (page) setCurrentPage(page)  
+        if (page) {
+            setCurrentPage(page)  
+            setCurrentElements(Math.trunc((page-1)/8)+1)
+        }
     },[searchParams])
 
     useEffect (()=>{
         const totalPages = props.totalPages
-        setMaxElements(Math.ceil(totalPages/10))
+        setMaxElements(Math.ceil(totalPages/8))
         if (totalPages) {
             const arr = [ ...Array(totalPages).keys() ].map(i => i+1)
             setPagesArray(arr)
-            setPages(arr.slice((currentElements-1)*10,currentElements*10))
+            setPages(arr.slice((currentElements-1)*8,currentElements*8))
         }   
     },[props.totalPages])
 
     useEffect(()=>{
-        if (pagesArray.length>0) setPages(pagesArray.slice((currentElements-1)*10,currentElements*10))
+        if (pagesArray.length>0) setPages(pagesArray.slice((currentElements-1)*8,currentElements*8))
     },[currentElements])
 
     const handleCurrentElements = (x) => {
@@ -46,23 +49,23 @@ export default function Pagination(props) {
     }
 
     return (
-        <div className="m-5 flex items-center justify-center w-full h-10\">
+        <div className="flex items-center justify-center w-full m-5">
             {currentElements > 1 && 
                 <div 
-                    className={`w-10 h-10 p-2 text-center bg-white hover:cursor-pointer hover:shadow transition duration-200 hover:scale-105`} 
+                    className={`rounded-l-md w-10 h-10 p-2 text-center bg-white hover:cursor-pointer hover:text-orange-400 transition duration-200`} 
                     onClick={()=>handleCurrentElements("prev")}
                 > {"<"} </div>
             }
             {pages.length>0 && pages.map((page)=>
                 <div 
-                    className={`w-10 h-10 p-2 text-center transition duration-200 hover:scale-105 hover:cursor-pointer hover:shadow ${currentPage.toString() === page.toString() ? 'bg-red-500' : 'bg-white'}`} 
+                    className={`w-10 h-10 p-2 text-center transition duration-200 hover:cursor-pointer ${currentPage.toString() === page.toString() ? 'bg-orange-400' : 'bg-white hover:text-orange-400'}`} 
                     key={page} 
                     onClick={()=>handelPage(page)}
                 > {page} </div>
             )}
             {currentElements < maxElements && 
                 <div 
-                    className={`w-10 h-10 p-2 text-center transition duration-200 hover:scale-105 bg-white hover:cursor-pointer hover:shadow`} 
+                    className={`rounded-r-md w-10 h-10 p-2 text-center transition duration-200 bg-white hover:cursor-pointer hover:text-orange-400`} 
                     onClick={()=>handleCurrentElements("next")}
                 > {">"} </div>
             }
