@@ -33,14 +33,12 @@ export default function Products() {
             setProductQty(total_products)
             setFilterData(filters)
         } 
-        console.log("fetched data")
     }
 
     const fetchAllDevices = async () => {
         const response = await fetch(`/api/get_all_devices`);
         const data = await response.json();
         setAllDevices(data)
-        console.log("fetched all devices")
     }
 
     useEffect(() => {

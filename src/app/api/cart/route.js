@@ -61,13 +61,11 @@ export async function POST(req) {
 }
 export async function GET(req) {
     let cartItems = await getStoredItems()
-    console.log(cartItems)
     try {
         return NextResponse.json({cart:cartItems,num_of_items:getNumOfItems(cartItems)}, {
             status: 200,
         });
     } catch (error) {
-        console.log(error)
         return NextResponse.json(
             { error: error },
             {
