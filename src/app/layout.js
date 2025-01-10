@@ -6,6 +6,7 @@ import { Provider } from 'react-redux';
 import { store } from '../store/store'; 
 import Nav from '@/components/nav';
 import Footer from '@/components/footer';
+import { Suspense } from 'react';
 
 export default function Layout({ children }) {
 
@@ -15,7 +16,9 @@ export default function Layout({ children }) {
         <Provider store={store}>    
           <NextUIProvider>
             <Nav />
-            {children}
+              <Suspense>
+                {children}
+              </Suspense>
             <Footer/>
           </NextUIProvider>
         </Provider>
