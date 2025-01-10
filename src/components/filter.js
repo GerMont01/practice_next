@@ -22,16 +22,16 @@ export default function Filter(props) {
 
     const myFilter = (optionsValue, inputValue) => {
         if (inputValue === null) return false
-        if (inputValue.length === 0) {
+        if (inputValue.length <= 1) {
           return false
         }
         
         optionsValue = optionsValue.normalize("NFC").toLocaleLowerCase();
         inputValue = inputValue.normalize("NFC").toLocaleLowerCase();
 
-        if (inputValue.length === 1) {
-            return optionsValue[0] === inputValue;
-        } else if (inputValue.length > 1) {
+        if (inputValue.length === 2) {
+            return optionsValue.substring(0,2) === inputValue;
+        } else if (inputValue.length > 2) {
             return optionsValue.includes(inputValue);
         }    
     }
