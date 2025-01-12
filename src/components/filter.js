@@ -211,10 +211,8 @@ export default function Filter(props) {
                 allowsCustomValue
                 className="w-full"
                 defaultFilter={myFilter}
-                // defaultItems={props.allDevices || []}
                 label="Search by name"
                 menuTrigger="input"
-                // inputValue={deviceName}
                 selectedKey={selectedDevice}
                 onSelectionChange={handleSelection}
                 onInputChange={handleInputValue}

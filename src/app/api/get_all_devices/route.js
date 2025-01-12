@@ -6,15 +6,6 @@ export async function GET(req) {
             let phones = [...devices]
 
             phones = phones.map(phone => phone.name)
-            // const all_os = [...new Set(phones.map(phone => phone.os))]
-            // const all_years = [...new Set(phones.map(phone => phone.released_at))]
-            
-            // const response = {
-            //     phones,
-            //     all_brands,
-            //     all_os,
-            //     all_years
-            // }
 
             return NextResponse.json(phones,{
                 status: 200,

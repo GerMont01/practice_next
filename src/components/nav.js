@@ -6,7 +6,6 @@ import { setCart } from '@/store/reducer';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation'
 import Image from "next/image";
-// import supermobilelogo from "../images/SuperMobileLogo.png";
 
 const Nav = () => {
     const numOfItems = useSelector((state) => state.cart.numOfItems)

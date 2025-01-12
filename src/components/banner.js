@@ -1,5 +1,4 @@
 import Image from "next/image";
-// import applewatch from "../images/applewatch.jpg";
 import Link from "next/link";
 
 const Banner = () => {

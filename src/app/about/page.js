@@ -1,5 +1,4 @@
 import Image from "next/image";
-// import aboutuspic from "../../images/aboutuspic.jpg";
 
 export default function About() {
   return (

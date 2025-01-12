@@ -57,7 +57,6 @@ export async function POST(req) {
     return NextResponse.json({ message: 'Item added to cart', cart: cartItems, num_of_items: getNumOfItems(cartItems)}, {
         status: 200,
         });
-    // res.status(201).json({ message: 'Item added to cart', cart: cartItems, num_of_items: getNumOfItems()})
 }
 export async function GET(req) {
     let cartItems = await getStoredItems()
@@ -73,7 +72,6 @@ export async function GET(req) {
             }
           );
     }
-            // res.status(200).json({cart:cartItems,num_of_items:getNumOfItems()})
 }
 export async function DELETE(req) {
     let cartItems = await getStoredItems()
@@ -94,5 +92,4 @@ export async function DELETE(req) {
     return NextResponse.json({ message: 'Item removed from cart', cart: cartItems, num_of_items: getNumOfItems(cartItems)}, {
         status: 200,
         });
-    // res.status(200).json({ message: 'Item removed from cart', cart: cartItems, num_of_items: getNumOfItems()})
 }
