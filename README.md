@@ -1,36 +1,103 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Super Mobile - Full-Stack E-commerce for Mobile Devices
 
-## Getting Started
+Welcome to **Super Mobile**, a full-stack e-commerce platform designed for purchasing mobile devices.
 
-First, run the development server:
+---
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## 🌟 Features
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### 1. **Dynamic Product Filtering**  
+   - The products page includes a **powerful and dynamic filter system**:
+     - Filters can be combined dynamically (e.g., filter by brand, price, and operating system simultaneously).  
+     - As you apply filters, the other filter options **automatically adjust** to display only options relevant to the current filter.  
+     - This ensures that you will **never encounter a "no match" result**, providing a seamless and frustration-free shopping experience.
 
-You can start editing the page by modifying `app/page.js`. The page auto-updates as you edit the file.
+### 2. **Persistent Shopping Cart**  
+   - The shopping cart functionality is implemented using **cookies**:
+     - Items in the cart are **persisted across sessions** so users can leave the site and return to find their cart intact.
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+### 3. **Full-Stack Architecture**  
+   - Backend API logic is built using **Next.js API Routes**, which handle:
+     - Cart management.
+     - Dynamic product filtering.
+     - Data processing for the frontend.
 
-## Learn More
+### 4. **Responsive Design**  
+   - Fully responsive across different screen sizes, providing an optimized shopping experience for mobile, tablet, and desktop users.
 
-To learn more about Next.js, take a look at the following resources:
+### 5. **Intuitive UI/UX**  
+   - A modern and clean user interface designed for easy navigation.
+   - User-friendly interactions, including hover effects, loading states, and smooth page transitions.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+---
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+## ⚙️ Technologies Used
 
-## Deploy on Vercel
+This project is built using the following frameworks, libraries, and tools:
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+- **[Next.js](https://nextjs.org/)**
+- **NextUI**
+- **TailwindCSS**
+- **Redux Toolkit**
+- **React-Redux** 
+- **HeroIcons**
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+---
+
+## 🚀 Getting Started
+
+To run this project locally, follow these steps:
+
+1. Clone the repository:  
+   ```bash
+   git clone https://github.com/GerMont01/practice_next.git
+
+2. Navigate to the project folder:
+    ```bash
+    cd practice_next
+
+3. Install dependencies:
+    ```bash
+    npm install
+
+4. Start the development server:
+    ```bash
+    npm run dev
+
+5. Open your browser and navigate to:
+    ```bash
+    http://localhost:3000
+
+---
+
+## 📂 Folder Structure
+Here's an overview of the folder structure for the project:
+
+project-root/
+├── public/                    # Static assets (e.g., images, icons)
+├── src/
+│   ├── app/                   # Next.js App Router (API routes and pages)
+│   │   ├── api/
+│   │   │   └── contact/
+│   │   │   └── get_all_devices/
+│   │   │   └── product_description/
+│   │   │   └── products/
+│   │   │   └── cart/ 
+│   │   ├── about/ 
+│   │   ├── cart/ 
+│   │   ├── contact/ 
+│   │   ├── products/ 
+│   │   │   └── [id]/
+│   │   └── layout.js
+│   │   └── page.js
+│   ├── components/            # Reusable UI components
+│   ├── styles/                # Tailwind and global styles
+│   ├── store/                 # Redux state management (cart logic)
+├── next.config.js             # Next.js configuration
+└── package.json               # Project dependencies
+
+## 🌍 Live Demo
+You can access the live version of the project here:
+https://super-mobile-m6yer0wy3-germont01s-projects.vercel.app/
+
+Thank you for checking out Super Mobile!

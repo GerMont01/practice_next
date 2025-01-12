@@ -19,7 +19,7 @@ const CartCounter = (props) => {
         });
         const response = await addItem.json();
         dispatch(setCart({cart:response.cart,numOfItems:response.num_of_items}))
-        alert(response.message)
+        // alert(response.message)
     }
 
     const handleRemoveFromCart = async () => {
@@ -32,7 +32,7 @@ const CartCounter = (props) => {
         });
         const response = await addItem.json();
         dispatch(setCart({cart:response.cart,numOfItems:response.num_of_items}))
-        alert(response.message)
+        // alert(response.message)
     };
 
     useEffect(()=>{

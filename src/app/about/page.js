@@ -1,5 +1,5 @@
 import Image from "next/image";
-import aboutuspic from "../../images/aboutuspic.jpg";
+// import aboutuspic from "../../images/aboutuspic.jpg";
 
 export default function About() {
   return (
@@ -17,7 +17,9 @@ export default function About() {
       </div>
       <div className="lg:w-[35%] w-full">
         <Image
-          src={aboutuspic}
+          src={"/images/aboutuspic.jpg"}
+          width={6000}
+          height={4000}
           alt="Photo by Vitaly Gariev on Unsplash"
           className="lg:h-full h-[250px] object-cover"
         />

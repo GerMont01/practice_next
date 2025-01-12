@@ -70,7 +70,7 @@ export default function Contact() {
             Submit
           </button>
         </form>
-        {response && <p>{response}</p>}
+        {response && <p className='pt-6'>{response}</p>}
       </div>
     </div>
   );

@@ -27,7 +27,6 @@ export default function Product() {
                     <div className="flex flex-col items-center justify-center h-full lg:w-1/2">
                         <div className="w-full h-full lg:w-3/5">
                             <h1 className="mt-10 mb-4 text-2xl font-bold">{device.name}</h1>
-                            {/* <img src={device.picture} alt={device.name} className="mb-4" /> */}
                             <p><strong>Brand:</strong> {device.brand_name}</p>
                             <p><strong>Released At:</strong> {device.released_at}</p>
                             <p><strong>Body:</strong> {device.body}</p>
@@ -56,7 +55,8 @@ export default function Product() {
                         </div>
                     </div>
                     <div className="flex flex-col items-center w-full p-8 bg-white lg:w-1/2">
-                        <img className="w-2/5 mb-10 m-14" src={device.picture} alt={device.name}/>
+                        <img className="w-2/5 mb-0 m-14" src={device.picture} alt={device.name}/>
+                        <b className="m-4">${device.price}</b>
                         <CartCounter  className="w-2/5" device={device}/>
                     </div>
                 </div>

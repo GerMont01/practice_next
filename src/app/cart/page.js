@@ -1,5 +1,6 @@
 "use client"
 import CartCounter from "@/components/cart_counter";
+import { Modal, ModalBody, ModalContent, ModalFooter, useDisclosure } from "@nextui-org/react";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
@@ -9,6 +10,7 @@ const Cart = () => {
     const router = useRouter()
 
     const [ total, setTotal ] = useState()
+    const {isOpen, onOpen, onOpenChange} = useDisclosure();
 
     useEffect(()=>{
         setTotal(cartItems.reduce((acc,item)=>acc+item.price*item.quantity,0))
@@ -37,10 +39,24 @@ const Cart = () => {
                 <div className="flex justify-between mb-2 font-bold"><p>Estimated Total</p><p>${(total*1.12).toFixed(2)}</p></div>
                 <button 
                     className="self-end px-3 py-2 ml-auto text-sm font-semibold text-gray-800 bg-white border shadow lg:mt-10 rounded-xl hover:bg-orange-400"
-                    onClick={()=>alert("Checking out")}
+                    onClick={onOpen}
                     > Check out
                 </button>
             </div>
+            <Modal placement={"center"} isOpen={isOpen} onOpenChange={onOpenChange}>
+                <ModalContent>
+                {(onClose) => (
+                    <>
+                        <ModalBody>
+                            <h2 className="p-10 mt-10">Check out page under construction...</h2>
+                        </ModalBody>
+                        <ModalFooter>
+                            <button onClick={onClose}>Close</button>
+                        </ModalFooter>
+                    </>
+                )}
+                </ModalContent>
+            </Modal>
         </div>
     )
 }

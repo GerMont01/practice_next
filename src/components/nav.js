@@ -6,7 +6,7 @@ import { setCart } from '@/store/reducer';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation'
 import Image from "next/image";
-import supermobilelogo from "../images/SuperMobileLogo.png";
+// import supermobilelogo from "../images/SuperMobileLogo.png";
 
 const Nav = () => {
     const numOfItems = useSelector((state) => state.cart.numOfItems)
@@ -30,16 +30,18 @@ const Nav = () => {
         <nav className="relative nav">
             <Link href="/" className="h-4/5 lg:h-full"> 
                 <Image
-                    src={supermobilelogo}
+                    src={"/images/SuperMobileLogo.png"}
                     alt="Super Mobile Logo"
+                    width={500}
+                    height={500}
                     className="w-auto h-full"
                 />
             </Link>
             <Link href="/about" className="link">About</Link>|
             <div className="relative" onMouseEnter={()=>setIsOpen(true)} onMouseLeave={()=>setIsOpen(false)}>
-                <Link href="/products" className="z-10 link">Products</Link>|
+                <Link href="/products" className="z-20 link">Products</Link>|
                 {isOpen && 
-                    <div className="absolute z-0 p-4 m-4 bg-white rounded shadow-sm top-16 w-52">
+                    <div className="absolute z-10 p-4 m-4 bg-white rounded shadow-sm lg:top-16 w-52">
                         <Link href="/products?type=Mobile" className="p-2 m-2 link">Mobiles</Link>
                         <Link href="/products?type=Smart+Watch" className="p-2 m-2 link">Smart Watches</Link>
                     </div>

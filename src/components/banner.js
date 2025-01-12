@@ -1,14 +1,16 @@
 import Image from "next/image";
-import applewatch from "../images/applewatch.jpg";
+// import applewatch from "../images/applewatch.jpg";
 import Link from "next/link";
 
 const Banner = () => {
     return (
         <div id="banner" className="flex justify-center w-full lg:h-[55vh] text-white bg-black">
             <Image 
-                src={applewatch} 
+                src={"/images/applewatch.jpg"} 
                 className="object-cover w-[45%] lg:w-1/3 h-[160px] lg:h-5/6" 
                 alt={"apple watch"} 
+                width={5000}
+                height={3000}
             />
             <div className="flex flex-col w-2/5 my-10 lg:mx-20">
                 <h1 className="mt-10 mb-4 text-lg font-bold lg:text-4xl">Discover the Latest Mobile Phones at Unbeatable Prices!</h1>
