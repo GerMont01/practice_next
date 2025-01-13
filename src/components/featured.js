@@ -35,28 +35,30 @@ const Featured = () => {
 
     return (
         <div id="featured" className="flex justify-center w-full lg:h-[35vh] pt-1">
-            {device ? (
-                <div className="flex justify-center w-[95%] h-full py-10 my-6 bg-white rounded shadow-md lg:w-1/2">
-                    <div className="flex flex-col pl-2 mr-10 w-[50%]">
-                        <h1 className="italic">Featured product</h1>
-                        <h1 className="mt-6 mb-4 font-bold lg:text-3xl">{device.name}</h1>
-                        <p className="text-sm lg:text-[16px]">For  only ${device.price} *before tax</p>
-                        <button 
-                            className="w-32 px-3 py-2 mt-4 ml-auto text-sm font-semibold text-gray-800 bg-white border shadow rounded-2xl hover:bg-orange-400" 
-                            onClick={handleAddToCart}
-                            >Add to Cart
-                        </button>
-                    </div>
-                    <img 
-                        src={device.picture} 
-                        className="pr-2 cursor-pointer h-5/6" 
-                        alt={device.name} 
-                        onClick={()=>router.push(`/products/${device.id}`)}
-                    />
-                </div>            
+            <div className="flex justify-center w-[95%] h-full py-10 my-6 bg-white rounded shadow-md lg:w-1/2">
+            {device ? (  
+            <>  
+                <div className="flex flex-col pl-2 mr-10 w-[50%]">
+                    <h1 className="italic">Featured product</h1>
+                    <h1 className="mt-6 mb-4 font-bold lg:text-3xl">{device.name}</h1>
+                    <p className="text-sm lg:text-[16px]">For  only ${device.price} *before tax</p>
+                    <button 
+                        className="w-32 px-3 py-2 mt-4 ml-auto text-sm font-semibold text-gray-800 bg-white border shadow rounded-2xl hover:bg-orange-400" 
+                        onClick={handleAddToCart}
+                        >Add to Cart
+                    </button>
+                </div>
+                <img 
+                    src={device.picture} 
+                    className="pr-2 cursor-pointer h-5/6" 
+                    alt={device.name} 
+                    onClick={()=>router.push(`/products/${device.id}`)}
+                />
+            </>
             ) : (
                 <Spinner color="default"/>
             )}
+            </div>
         </div>
     )
     

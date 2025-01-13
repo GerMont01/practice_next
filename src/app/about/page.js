@@ -1,6 +1,8 @@
 import Image from "next/image";
+import { Suspense } from "react";
 
 export default function About() {
+  
   return (
     <div className="flex flex-col justify-center lg:container lg:flex-row">
       <div className="lg:w-[50%] p-2 lg:m-auto lg:pt-20 w-full text-sm lg:text-lg text-gray-600 mb-4">
@@ -15,13 +17,16 @@ export default function About() {
         </p>
       </div>
       <div className="lg:w-[35%] w-full">
-        <Image
-          src={"/images/aboutuspic.jpg"}
-          width={6000}
-          height={4000}
-          alt="Photo by Vitaly Gariev on Unsplash"
-          className="lg:h-full h-[250px] object-cover"
-        />
+        <Suspense fallback={<div className="lg:h-full h-[250px] w-full bg-gray-200"></div>}>
+          <Image
+            src={"/images/aboutuspic.jpg"}
+            width={6000}
+            height={4000}
+            alt="Photo by Vitaly Gariev on Unsplash"
+            className="lg:h-full h-[250px] object-cover fade-in"
+          />
+        </Suspense>
+        
       </div>
     </div>
   )

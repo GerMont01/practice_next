@@ -9,7 +9,7 @@
 
 @layer components {
   .nav {
-    @apply sticky w-full top-0 flex items-center justify-start h-20 lg:pl-32 bg-white shadow-sm;
+    @apply sticky top-0 flex items-center justify-start w-full h-20 bg-white shadow-sm lg:pl-32;
   }
   .link {
     @apply inline-block lg:p-4 lg:m-4 p-1 m-1 text-sm lg:text-[16px] rounded hover:text-orange-400;
@@ -33,5 +33,21 @@
   .container {
     height: calc(100vh - 80px);
     background-color: rgb(243 244 246)
+  }
+  .fade-in {
+    opacity: 1;
+    animation-name: fadeInOpacity;
+    animation-iteration-count: 1;
+    animation-timing-function: ease-in;
+    animation-duration: 0.5s;
+  }
+  
+  @keyframes fadeInOpacity {
+    0% {
+      opacity: 0;
+    }
+    100% {
+      opacity: 1;
+    }
   }
 }

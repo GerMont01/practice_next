@@ -1,6 +1,6 @@
 "use client"
 import Filter from "@/components/filter";
-import { useEffect, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 import { useRouter, useSearchParams } from 'next/navigation'
 import {Spinner} from "@nextui-org/react";
 import Pagination from "@/components/pagination";
@@ -49,7 +49,7 @@ export default function Products() {
         if (!allDevices) fetchAllDevices()
     },[])
 
-    
+
     return (
         <div className="container h-full max-w-full bg-gray-100">
             <div className="flex flex-col w-full lg:flex-row place-content-between">
@@ -64,13 +64,14 @@ export default function Products() {
                                     <p className="text-sm font-bold text-center">{product.name}</p>
                                     <p className="text-sm font-bold text-center">({product.released_at})</p>
                                 </div>
-                                <img 
-                                    src={product.picture} 
-                                    className="w-11/12" 
-                                    alt={product.name} 
-                                    onClick={()=>router.push(`/products/${product.id}`)}
-                                />
-                                
+                                <Suspense fallback={<div className="bg-gray-200 w-11/12 pt-[132.5%]"></div>}>
+                                    <img 
+                                        src={product.picture} 
+                                        className="w-11/12" 
+                                        alt={product.name} 
+                                        onClick={()=>router.push(`/products/${product.id}`)}
+                                    />
+                                </Suspense>
                                 <p className="mt-8 mb-2 text-sm font-bold text-center">$ {product.price}</p>
                             </div>
                         ))}
