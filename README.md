@@ -72,32 +72,32 @@ To run this project locally, follow these steps:
 
 ## 📂 Folder Structure
 Here's an overview of the folder structure for the project:
-
-project-root/
-├── public/                    # Static assets (e.g., images, icons)
-├── src/
-│   ├── app/                   # Next.js App Router (API routes and pages)
-│   │   ├── api/
-│   │   │   └── contact/
-│   │   │   └── get_all_devices/
-│   │   │   └── product_description/
-│   │   │   └── products/
-│   │   │   └── cart/ 
-│   │   ├── about/ 
-│   │   ├── cart/ 
-│   │   ├── contact/ 
-│   │   ├── products/ 
-│   │   │   └── [id]/
-│   │   └── layout.js
-│   │   └── page.js
-│   ├── components/            # Reusable UI components
-│   ├── styles/                # Tailwind and global styles
-│   ├── store/                 # Redux state management (cart logic)
-├── next.config.js             # Next.js configuration
-└── package.json               # Project dependencies
-
+```plaintext
+   project-root/
+   ├── public/                    # Static assets (e.g., images, icons)
+   ├── src/
+   │   ├── app/                   # Next.js App Router (API routes and pages)
+   │   │   ├── api/
+   │   │   │   └── contact/
+   │   │   │   └── get_all_devices/
+   │   │   │   └── product_description/
+   │   │   │   └── products/
+   │   │   │   └── cart/ 
+   │   │   ├── about/ 
+   │   │   ├── cart/ 
+   │   │   ├── contact/ 
+   │   │   ├── products/ 
+   │   │   │   └── [id]/
+   │   │   └── layout.js
+   │   │   └── page.js
+   │   ├── components/            # Reusable UI components
+   │   ├── styles/                # Tailwind and global styles
+   │   ├── store/                 # Redux state management (cart logic)
+   ├── next.config.js             # Next.js configuration
+   └── package.json               # Project dependencies
+```
 ## 🌍 Live Demo
 You can access the live version of the project here:
-https://super-mobile-m6yer0wy3-germont01s-projects.vercel.app/
+https://super-mobile-qtbthk81n-germont01s-projects.vercel.app/
 
 Thank you for checking out Super Mobile!
